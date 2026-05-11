@@ -59,7 +59,7 @@
                 {% set img = product.images | selectattr('url') | list | first %}
 
                 <img
-                src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+                src="{% if img %}{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
                 class="w-full h-full object-cover"
                 >
 
