@@ -200,9 +200,7 @@
     </form>
 
 </div>
-<div id="image-error" class="hidden text-red-600 font-medium text-sm bg-red-50 p-3 rounded-xl border border-red-200">
-    ⚠️ Adiciona pelo menos uma imagem para continuar.
-</div>
+
 <!-- FLOATING -->
 <a
 href="/mensagens"
@@ -223,8 +221,6 @@ class="fixed bottom-24 right-5 z-50"
     </div>
 
 </a>
-
-<script>
 
 <script>
 
@@ -263,55 +259,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img.classList.remove('hidden');
             placeholder.classList.add('hidden');
 
-            // remove erro visual se for a primeira imagem
-            if (input.hasAttribute("required")) {
-                box.classList.remove("border-red-500");
-            }
-
         });
 
     });
 
-
-    // FORM VALIDATION (SÓ 1ª IMAGEM)
-    const form = document.querySelector("form");
-
-    form.addEventListener("submit", function (e) {
-
-        const firstImageInput = document.querySelector("input[name='images'][required]");
-        const firstBox = firstImageInput.closest(".image-box");
-
-        if (!firstImageInput.files.length) {
-
-            e.preventDefault();
-
-            // mensagem
-            let errorBox = document.getElementById("image-error");
-
-            if (!errorBox) {
-                errorBox = document.createElement("div");
-                errorBox.id = "image-error";
-                errorBox.className = "text-red-600 font-medium text-sm bg-red-50 p-3 rounded-xl border border-red-200 mt-2";
-                errorBox.innerText = "⚠️ A primeira imagem é obrigatória.";
-                
-                form.insertBefore(errorBox, form.querySelector("button"));
-            } else {
-                errorBox.classList.remove("hidden");
-            }
-
-            // destaque só na primeira imagem
-            firstBox.classList.add("border-red-500");
-
-            firstBox.scrollIntoView({ behavior: "smooth", block: "center" });
-
-            return;
-        }
-
-    });
-
 });
-
-</script>
 
 </script>
 
