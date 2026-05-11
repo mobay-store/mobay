@@ -3,7 +3,45 @@ from services.product_service import get_product
 from models import Product, ProductImage, db, User
 import os, uuid
 from werkzeug.utils import secure_filename
+import cloudinary
+import cloudinary.uploader
+
+
+
 from PIL import Image
+import io
+
+cloudinary.config(
+    cloud_name="SEU_CLOUD_NAME",
+    api_key="SUA_API_KEY",
+    api_secret="SEU_API_SECRET"
+)
+
+
+def upload_image(file):
+    # 1. limpar nome original
+    filename = secure_filename(file.filename)
+
+    # 2. abrir imagem
+    img = Image.open(file)
+
+    # 3. otimizar tamanho
+    img.thumbnail((800, 800))
+
+    # 4. converter para buffer
+    buffer = io.BytesIO()
+    img.save(buffer, format="JPEG", quality=70)
+    buffer.seek(0)
+
+    # 5. upload para cloudinary usando nome seguro
+    result = cloudinary.uploader.upload(
+        buffer,
+        public_id=filename.rsplit(".", 1)[0],  # sem extensão
+        folder="products"
+    )
+
+    return result["secure_url"]
+
 
 product_bp = Blueprint("product", __name__)
 
@@ -53,18 +91,12 @@ def add_product():
 
         for file in valid_files[:3]:
             try:
-                img = Image.open(file)
-                img.thumbnail((800, 800))
-
-                filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
-
-                full_path = os.path.join(UPLOAD_FOLDER, filename)
-
-                img.save(full_path, optimize=True, quality=70)
+                image_url = upload_image(file)
+                
 
                 db.session.add(ProductImage(
                     product_id=product.id,
-                    url=full_path
+                    url=image_url
                 ))
 
             except Exception as e:
