@@ -20,26 +20,26 @@ cloudinary.config(
 
 
 def upload_image(file):
-    # 1. limpar nome original
     filename = secure_filename(file.filename)
 
-    # 2. abrir imagem
     img = Image.open(file)
 
-    # 3. otimizar tamanho
+    # converte para RGB
+    if img.mode != "RGB":
+        img = img.convert("RGB")
+
     img.thumbnail((800, 800))
 
-    # 4. converter para buffer
     buffer = io.BytesIO()
     img.save(buffer, format="JPEG", quality=70)
     buffer.seek(0)
 
-    # 5. upload para cloudinary usando nome seguro
     result = cloudinary.uploader.upload(
         buffer,
-        public_id=filename.rsplit(".", 1)[0],  # sem extensão
+        public_id=filename.rsplit(".", 1)[0],
         folder="products"
     )
+
     print(result)
 
     return result["secure_url"]
