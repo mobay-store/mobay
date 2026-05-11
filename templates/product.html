@@ -13,10 +13,10 @@
         <div class="w-full h-[320px] md:h-[500px] overflow-hidden bg-white">
 
             {% if product.images %}
-            {% set img = product.images | selectattr('url') | list | first %}
+            
             <img
             id="mainImage"
-            src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+            src="/{{product.images[0].url}}"
             class="w-full h-full object-cover"
             >
             {% else %}
@@ -266,57 +266,16 @@ class="fixed bottom-24 right-5 z-50 group"
 
 
 
-{% set img = product.images | selectattr('url') | list | first %}
-<div id="shareCard" class="fixed -left-[9999px] w-[400px] bg-white overflow-hidden">
-
-  <img src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}" class=" w-full object-contain">
-
-  <div class="p-5">
-    <h1 class="text-2xl font-bold">
-      {{ product.titulo }}
-    </h1>
-
-    <div class="text-3xl font-black text-green-600 mt-3">
-      {{ product.preco }} MZN
-    </div>
-
-    <div class="mt-4 text-gray-500">
-      Vendido por: {{ product.owner.nome }}
-    </div>
-
-    <div class="mt-6 font-bold text-orange-400 fon-gold">
-      mobay
-    </div>
-  </div>
-
-</div>
 
 
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 <script>
 
-async function generateImage(titulo) {
-
-    const card = document.getElementById("shareCard");
-
-    const canvas = await html2canvas(card, {
-        scale: 3
-    });
-
-    const image = canvas.toDataURL("image/png");
-
-    // download
-    const link = document.createElement("a");
-
-    link.download = titulo+".png";
-    link.href = image;
-
-    link.click();
-
+async function generateImage() {
     // copiar link
     await navigator.clipboard.writeText(window.location.href);
 
-    alert("Imagem gerada e link copiado!");
+    alert("Link copiado!");
 }
 
 
