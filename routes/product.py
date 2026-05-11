@@ -21,7 +21,7 @@ cloudinary.config(
 
 def upload_image(file):
 
-    print"Aquiiiiiiiiiiiiiiiiii"
+    print("Aquiiiiiiiiiiiiiiiiii")
     filename = secure_filename(file.filename)
 
     img = Image.open(file)
