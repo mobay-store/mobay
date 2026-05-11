@@ -173,7 +173,7 @@ async function loadProducts(){
                 </div>
             `;
 
-            card.onclick = () => openModal(p.titulo, p.preco + " MZN", p.id, p.imagem);
+            card.onclick = () => openModal(p.titulo, p.preco + " MZN", p.id, (p.imagem).replace("https://mobay.online/", ""));
 
             grid.appendChild(card);
         });
