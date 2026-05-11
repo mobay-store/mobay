@@ -191,8 +191,9 @@
     </div>
 
     <!-- BOTTOM ACTION -->
-    {% if product.user_id != session.get('user_id') %}
+    
     <div class="fixed bottom-20 left-0 w-full px-4 z-40">
+        {% if product.user_id != session.get('user_id') %}
 
         <div class="w-full md:w-[80%] lg:w-[65%] mx-auto bg-white border border-slate-200 rounded-3xl shadow-2xl p-4 flex gap-3">
 
@@ -218,7 +219,7 @@
                 </svg>
 
             </button>
-
+            {% endif %}
             <!-- COMPARTILHAR -->
             <a
             onclick="generateImage('{{product.titulo}}')"
@@ -239,7 +240,7 @@
         </div>
 
     </div>
-    {% endif %}
+    
 
 </div>
 
