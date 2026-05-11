@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{%block title%}{%endblock%}</title>
+
+
+    <style>
+        body{
+
+            font-family:Arial,sans-serif;
+        }
+    </style>
+</head>
+<body>
+        <div class="flex flex-col pb-[50px]">
+    {% block content %}{% endblock %}
+
+
+       <!-- navbar -->
+        <nav class="w-full fixed bottom-0 flex justify-around p-2 g-2 items-center bg-gray-200 text-gray-700 font-bold lg:hidden">
+            <a class=" flex flex-col items-center justify-center " href="/" id="home">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+
+                Home
+            </a>
+            <a class="flex flex-col items-center justify-center" href="/vender" id="anunciar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- saco/produto -->
+                <path d="M6 7h12l-1 14H7L6 7z"/>
+                <path d="M9 7V5a3 3 0 016 0v2"/>
+
+                <!-- botão + -->
+                <circle cx="18" cy="18" r="4"/>
+                <path d="M18 16v4M16 18h4"/>
+                </svg>
+
+                Vender
+            </a>
+            <a class="flex flex-col items-center justify-center" href="/transactions" id="transacoes">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- carteira -->
+                <path d="M3 7h15a2 2 0 012 2v9a3 3 0 01-3 3H5a2 2 0 01-2-2V7z"/>
+
+                <!-- fecho da carteira -->
+                <path d="M3 7V5a2 2 0 012-2h12a2 2 0 012 2v2"/>
+
+                <!-- moeda -->
+                <circle cx="17" cy="13" r="2"/>
+
+                <!-- símbolo de crescimento -->
+                <path d="M10 15l2-2 2 2 3-3"/>
+                </svg>
+
+                Transa&ccedil;&otilde;es
+            </a>
+            <a class="flex flex-col items-center justify-center" href="/profile" id="perfil">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+
+                Perfil
+            </a>
+        </nav>
+
+    </div>
+
+
+</body>
+</html>
