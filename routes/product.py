@@ -12,10 +12,11 @@ from PIL import Image
 import io
 
 cloudinary.config(
-    cloud_name="SEU_CLOUD_NAME",
-    api_key="SUA_API_KEY",
-    api_secret="SEU_API_SECRET"
+    cloud_name=os.environ.get("CLOUD_NAME"),
+    api_key=os.environ.get("API_KEY"),
+    api_secret=os.environ.get("API_SECRET")
 )
+
 
 
 def upload_image(file):
