@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{%block title%}Adicionar pagamento{%endblock%}
+
+{% block content %}
+
+<div class="overflow-auto bg-slate-50 p-4">
+
+    <!-- HEADER -->
+    <div class="w-full md:w-[70%] lg:w-[50%] mx-auto mb-6 flex items-center justify-between">
+
+        <div>
+
+            <h1 class="text-3xl font-bold text-slate-900">
+                Gerenciar Contas
+            </h1>
+
+            <p class="text-slate-500 mt-1">
+                Gerencie suas formas de pagamento
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- BOTÃO ADICIONAR -->
+    {% if not carteira %}
+    <div class="w-full md:w-[70%] lg:w-[50%] mx-auto mb-5">
+
+        <button
+        onclick="openModal()"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-3xl p-5 flex items-center justify-center gap-3 shadow-lg transition duration-200 font-semibold text-lg"
+        >
+
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+            >
+                <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+                />
+            </svg>
+
+            Adicionar forma de pagamento
+
+        </button>
+
+    </div>
+    {% endif %}
+
+    <!-- LISTA -->
+    {% if carteira %}
+    <div class="w-full md:w-[70%] lg:w-[50%] mx-auto flex flex-col gap-4">
+
+        <!-- ITEM -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition duration-200">
+
+            <div class="flex items-center gap-4">
+
+                <!-- ICON -->
+                <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center">
+
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-7 h-7 text-green-600"
+                    >
+                        <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 8.25h19.5m-18 0v8.25A2.25 2.25 0 0 0 6 18.75h12a2.25 2.25 0 0 0 2.25-2.25V8.25"
+                        />
+                    </svg>
+
+                </div>
+
+                <!-- INFO -->
+                <div class="flex flex-col">
+
+                    <span class="font-bold text-slate-900 text-lg">
+                        {{carteira.operadora}}
+                    </span>
+
+                    <span class="text-slate-500">
+                        {{carteira.telefone}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- BOTÃO -->
+            <button
+            onclick="window.location.href='/remover-pay'"
+            class="bg-red-100 hover:bg-red-200 text-red-600 rounded-xl px-4 py-3 font-semibold transition duration-200"
+            >
+                Eliminar
+            </button>
+
+        </div>
+
+    </div>
+    {%endif%}
+
+</div>
+
+<!-- MODAL -->
+<div
+id="modal"
+class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center p-4"
+>
+
+    <!-- BOX -->
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 flex flex-col gap-5">
+
+        <!-- HEADER -->
+        <div>
+
+            <h2 class="text-2xl font-bold text-slate-900">
+                Adicionar conta
+            </h2>
+
+            <p class="text-slate-500 mt-1">
+                Adicione uma nova forma de pagamento
+            </p>
+
+        </div>
+
+        <!-- FORM -->
+        <form class="flex flex-col gap-4" action="/add-pay" method="post">
+
+            <!-- TIPO -->
+            <div class="flex flex-col gap-2">
+
+                <label class="text-slate-700 font-semibold">
+                    Tipo de conta
+                </label>
+
+                <select name="operadora"
+                class="border border-slate-200 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                required
+                >
+                <option value="eMola">eMola</option>
+                <option value="Mpesa">Mpesa</option>
+                <option value="mKesh">mKesh</option>
+                </select>
+
+            </div>
+
+            <!-- NÚMERO -->
+            <div class="flex flex-col gap-2">
+
+                <label class="text-slate-700 font-semibold">
+                    Número
+                </label>
+
+                <input
+                type="text"
+                name="telefone"
+                placeholder="+258 84 000 0000"
+                class="border border-slate-200 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-blue-500"
+                required
+                >
+
+            </div>
+
+            <!-- PIN -->
+            <div class="flex flex-col gap-2">
+
+                <label class="text-slate-700 font-semibold">
+                    Número
+                </label>
+
+                <input
+                type="password"
+                name="pin"
+                maxlength="6"
+                placeholder="••••••"
+                required
+                class="border border-slate-200 rounded-2xl p-4 text-center text-2xl tracking-[10px] outline-none focus:ring-2 focus:ring-red-500"
+                >
+
+            </div>
+
+
+        <!-- BOTÕES -->
+        <div class="flex gap-3">
+
+            <button
+            onclick="closeModal()"
+            class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl p-4 font-semibold transition duration-200"
+            >
+                Cancelar
+            </button>
+
+            <button
+            type="submit"
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-4 font-semibold transition duration-200"
+            >
+                Adicionar
+            </button>
+
+        </div>
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<a
+href="/mensagens"
+class="fixed bottom-24 right-5 z-50 group"
+>
+
+
+    <!-- BOTÃO -->
+    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl flex items-center justify-center transition duration-300 hover:scale-110 active:scale-95">
+
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-8 h-8 text-white"
+        >
+            <path fill-rule="evenodd" d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z" clip-rule="evenodd" />
+        </svg>
+
+    </div>
+
+</a>
+
+<!-- SCRIPT -->
+<script>
+
+    function openModal() {
+
+        const modal = document.getElementById('modal');
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+    }
+
+    function closeModal() {
+
+        const modal = document.getElementById('modal');
+
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+
+    }
+
+</script>
+
+{% endblock %}
+
+
+
+
