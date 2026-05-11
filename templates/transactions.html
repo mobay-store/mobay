@@ -68,8 +68,9 @@
             {% if t.status == 'confirmada' and session.get('user_id') == t.buyer_id %}
             <div class="border border-slate-200 rounded-2xl p-4 flex items-center gap-4">
 
+                {% set img = t.product.images | selectattr('url') | list | first %}
                 <img
-                src="{{ url_for('static', filename='img/demo.jpg') }}"
+                src="{% if img %}{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
                 class="w-20 h-20 rounded-xl object-cover"
                 >
 
@@ -144,7 +145,7 @@
 
                 {% set img = t.product.images | selectattr('url') | list | first %}
                 <img
-                src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+                src="{% if img %}{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
                 class="w-20 h-20 rounded-xl object-cover"
                 >
 
@@ -223,7 +224,7 @@
                 {% set img = t.product.images | selectattr('url') | list | first %}
 
                 <img
-                src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+                src="{% if img %}{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
                 class="w-20 h-20 rounded-xl object-cover"
                 >
 
@@ -278,7 +279,7 @@
                 {% set img = t.product.images | selectattr('url') | list | first %}
 
                 <img
-                src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+                src="{% if img %}{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
                 class="w-20 h-20 rounded-xl object-cover"
                 >
 
