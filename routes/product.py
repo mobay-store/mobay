@@ -90,7 +90,9 @@ def stock():
 def loja(user_id):
 
     products = Product.query.filter_by(user_id=user_id).all()
-    return render_template("my_store.html", products=products)
+    user = User.query.get_or_404(user_id)
+    owner = user.nome
+    return render_template("my_store.html", products=products, owner=owner)
 
 
 @product_bp.route("/del-prod", methods=["POST", "GET"])
