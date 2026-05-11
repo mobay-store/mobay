@@ -12,7 +12,7 @@ from PIL import Image
 import io
 
 cloudinary.config(
-    cloud_name=os.environ.get("CLOUD_NAME"),
+    cloud_name="di5xpqgcx",
     api_key="243372635448879",
     api_secret="zdabFGmgS3xQ7GQK055XDs2-vXg"
 )
