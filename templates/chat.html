@@ -17,7 +17,7 @@
                 {% set img = product.images | selectattr('url') | list | first %}
 
                 <img
-                src="/{{ img.url if img else 'static/img/default.jpg' }}"
+                src="{{ img.url if img else 'static/img/default.jpg' }}"
                 class="w-full h-full object-cover"
                 >
 
