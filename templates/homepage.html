@@ -20,7 +20,9 @@
 <!-- HERO -->
 <div class="mt-8 p-4 text-xl text-white bg-gradient-to-r from-slate-900 to-blue-900 rounded-lg m-4 flex justify-around items-center w-[95%] md:w-[50%] m-auto">
     Faz as suas compras e vendas de forma segura
+    {% if not session.get('user_id') %}
     <button class="w-2/5 h-12 bg-blue-600 rounded-xl m-2 p-2" onclick="window.location.href='/login'">Entrar</button>
+    {% endif %}
 </div>
 
 <!-- FILTERS -->
