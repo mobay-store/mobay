@@ -1,0 +1,286 @@
+
+
+
+
+
+{% extends "base.html" %}
+
+{% block title %}Perfil{%endblock%}
+{% block content %}
+
+<div class="overflow-auto bg-slate-50 p-4">
+
+    <!-- CONTAINER -->
+    <div class="w-full md:w-[70%] lg:w-[45%] mx-auto">
+
+        <!-- PERFIL -->
+        <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 flex flex-col items-center">
+
+            <!-- AVATAR -->
+            <div class="relative">
+
+                <div class="w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-xl">
+
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-14 h-14 text-white"
+                    >
+                        <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275"
+                        />
+                    </svg>
+
+                </div>
+
+                <!-- STATUS -->
+                <div class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+
+            </div>
+
+            <!-- INFO -->
+            <div class="flex flex-col items-center mt-5">
+
+                <h1 class="text-2xl font-bold text-slate-900">
+                    {{user.nome}}
+                </h1>
+
+                <span class="text-slate-500 mt-1">
+                    +258 {{user.telefone}}
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- MENU -->
+        <div class="mt-5 flex flex-col gap-4">
+
+            <!-- EDITAR -->
+            <a
+            href=""
+            class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:shadow-md transition duration-200"
+            >
+
+                <div class="flex items-center gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 text-blue-600"
+                        >
+                            <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <span class="font-semibold text-slate-800">
+                        Editar perfil
+                    </span>
+
+                </div>
+
+            </a>
+
+            <!-- MINHA LOJA -->
+            <a
+            href="/stock"
+            class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:shadow-md transition duration-200"
+            >
+
+                <div class="flex items-center gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center">
+
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 text-orange-600"
+                        >
+                            <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.25 3h1.386a.75.75 0 0 1 .728.568l.893 3.572m0 0L6.75 13.5h10.5l1.857-6.36a.75.75 0 0 0-.728-.96H5.257Z"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <span class="font-semibold text-slate-800">
+                        Minha loja / Stock
+                    </span>
+
+                </div>
+
+            </a>
+
+            <!-- TRANSAÇÕES -->
+            <a
+            href="/transactions"
+            class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:shadow-md transition duration-200"
+            >
+
+                <div class="flex items-center gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
+
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 text-green-600"
+                        >
+                            <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 6v12m6-6H6"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <span class="font-semibold text-slate-800">
+                        Transações
+                    </span>
+
+                </div>
+
+            </a>
+
+            <!-- PAGAMENTOS -->
+            <a
+            href="/payments"
+            class="bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between hover:shadow-md transition duration-200"
+            >
+
+                <div class="flex items-center gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 text-purple-600"
+                        >
+                            <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.25 8.25h19.5m-18 0v8.25A2.25 2.25 0 0 0 6 18.75h12a2.25 2.25 0 0 0 2.25-2.25V8.25"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <span class="font-semibold text-slate-800">
+                        Métodos de pagamento
+                    </span>
+
+                </div>
+
+            </a>
+
+            <!-- SAIR -->
+            <a
+            href="/sair"
+            class="bg-red-500 hover:bg-red-600 text-white rounded-2xl p-4 flex items-center justify-center gap-3 shadow-lg transition duration-200 mt-3"
+            >
+
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+                >
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                    />
+                </svg>
+
+                <span class="font-semibold">
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<a
+href="/mensagens"
+class="fixed bottom-24 right-5 z-50 group"
+>
+
+
+    <!-- BOTÃO -->
+    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl flex items-center justify-center transition duration-300 hover:scale-110 active:scale-95">
+
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-8 h-8 text-white"
+        >
+            <path fill-rule="evenodd" d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z" clip-rule="evenodd" />
+        </svg>
+
+    </div>
+
+</a>
+
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const home = document.getElementById('home');
+    const anunciar = document.getElementById('anunciar');
+    const transacoes= document.getElementById('transacoes');
+    const perfil = document.getElementById('perfil');
+
+    home.classList.remove('text-blue-500');
+    anunciar.classList.remove('text-blue-500');
+    transacoes.classList.remove('text-blue-500');
+
+
+    perfil.classList.add('text-blue-500');
+
+});
+
+</script>
+
+
+{% endblock %}
+
+

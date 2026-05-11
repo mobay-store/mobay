@@ -1,0 +1,95 @@
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:#f6f6f6;padding-bottom:80px} 
+    .container{
+      max-width:900px;
+      margin:auto;
+      background:#fff;
+      min-height:100vh;
+    }
+@media (min-width: 768px) {.container {width: 70%;}}
+    /* HEADER */
+    .header{
+      padding:16px;
+      font-size:18px;
+      font-weight:bold;
+      border-bottom:1px solid #eee;
+      background:#fff;
+    }
+
+    /* SEARCH */
+    .search{
+      padding:10px 16px;
+    }
+
+    .search input{
+      width:100%;
+      padding:10px;
+      border:1px solid #ddd;
+      border-radius:8px;
+      outline:none;
+    }
+
+    /* CHAT LIST */
+    .list{
+      padding:10px;
+    }
+
+    .chat-item{
+      display:flex;
+      gap:10px;
+      padding:12px;
+      border-bottom:1px solid #eee;
+      align-items:center;
+      cursor:pointer;
+    }
+
+    .avatar{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      background:#ddd;
+      flex-shrink:0;
+    }
+
+    .info{
+      flex:1;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .name{
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .time{
+      font-size:11px;
+      color:#777;
+    }
+
+    .msg{
+      font-size:12px;
+      color:#666;
+      margin-top:3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .product{
+      font-size:11px;
+      color:#1a8f3a;
+      margin-top:3px;
+    }
+
+    .badge{
+      background:#1a8f3a;
+      color:#fff;
+      font-size:10px;
+      padding:3px 7px;
+      border-radius:20px;
+    }

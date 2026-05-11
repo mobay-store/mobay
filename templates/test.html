@@ -1,0 +1,23 @@
+<!-- HTML Structure -->
+<input type="file" id="imageInput" accept="image/*">
+<div id="previewContainer">
+  <img id="imagePreview" src="#" alt="Image Preview" style="display:none; max-width: 300px;">
+</div>
+
+<script>
+  const imageInput = document.getElementById('imageInput');
+  const imagePreview = document.getElementById('imagePreview');
+
+  imageInput.addEventListener('change', function() {
+    const file = this.files[0]; // Get the selected file
+    
+    if (file) {
+      // Create a temporary URL for the file
+      const objectURL = URL.createObjectURL(file);
+      
+      // Update image source and display it
+      imagePreview.src = objectURL;
+      imagePreview.style.display = 'block';
+    }
+  });
+</script>

@@ -1,0 +1,104 @@
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:#f6f6f6;padding-bottom:80px} 
+    
+    .container{max-width:900px;margin:auto;background:#fff;min-height:100vh}
+
+    .header{padding:16px;font-size:18px;font-weight:bold}
+
+    /* Card */
+    .list{padding:10px}
+     @media (min-width: 768px) {.container {width: 70%;}}
+
+    .card{
+      display:flex;
+      gap:10px;
+      padding:10px;
+      border:1px solid #eee;
+      border-radius:10px;
+      margin-bottom:10px;
+      background:#fafafa;
+    }
+
+    .image{
+      width:80px;
+      height:80px;
+      background:#ddd;
+      border-radius:8px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+        .image img{
+      object-fit: contain;
+      width: 100%;
+
+      
+    }
+    .info{flex:1}
+
+    .title{font-size:14px;font-weight:bold}
+    .price{font-size:13px;color:#1a8f3a;margin-top:4px}
+    .meta{font-size:11px;color:#777;margin-top:3px}
+
+    .status{
+      font-size:10px;
+      margin-top:5px;
+      display:inline-block;
+      padding:3px 6px;
+      border-radius:10px;
+    }
+
+    .active{background:#e6f7ec;color:#1a8f3a}
+    .paused{background:#fff4e5;color:#ff9800}
+    .sold{background:#e3f2fd;color:#007bff}
+
+    .actions{
+      margin-top:8px;
+      display:flex;
+      gap:5px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:6px 8px;
+      border:none;
+      border-radius:5px;
+      font-size:11px;
+      cursor:pointer;
+    }
+
+    .edit{background:#333;color:#fff}
+    .pause{background:#ff9800;color:#fff}
+    .delete{background:#e53935;color:#fff}
+    .promote{background:#1a8f3a;color:#fff}
+    
+    
+          /* FLOATING */
+    .floating{
+      position:fixed;
+      right:15px;
+      bottom:100px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    @media (min-width: 768px) {
+        .container {
+        width: 70%;
+          
+        }
+         .floating { right:190px;}
+
+    .fab{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      border:none;
+      color:#fff;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .share{background:#ff9800}

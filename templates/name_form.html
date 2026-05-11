@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Criar conta{% endblock %}
+{% block content %}
+
+<div class="overflow-auto bg-slate-50 flex items-center justify-center p-4">
+
+    <!-- CONTAINER -->
+    <div class="w-full md:w-[70%] lg:w-[40%]">
+
+        <!-- CARD -->
+        {% with error = get_flashed_messages() %}
+        {% if error %}
+            <p class="text-red-400 flex justify-center">{{error[0]}}</p>
+        {%endif%}
+        {%endwith%}
+        <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
+
+            <!-- HEADER -->
+            <div class="text-center">
+
+                <div class="w-20 h-20 rounded-3xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
+
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-10 h-10 text-blue-600"
+                    >
+                        <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 6.75c0 10.5 9 15.75 9.75 15.75s9.75-5.25 9.75-15.75a9.75 9.75 0 1 0-19.5 0Z"
+                        />
+                    </svg>
+
+                </div>
+
+                <h1 class="text-3xl font-bold text-slate-900">
+                    Falta pouco
+                </h1>
+
+                <p class="text-slate-500 mt-2">
+                    Insira o seu nome e novo pin
+                </p>
+
+            </div>
+
+            <!-- FORM -->
+            <form class="flex flex-col gap-5" method="post" action="/login/name">
+
+                <!-- NOME -->
+                <div class="flex flex-col gap-2">
+
+                    <label class="text-slate-700 font-semibold">
+                        Nome
+                    </label>
+
+                    <input
+                    type="text"
+                    maxlength="15"
+                    name="nome"
+                    placeholder="Joao Baptista"
+                    required
+                    class="border border-slate-200 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
+                    >
+
+                </div>
+
+                <!-- PIN -->
+                <div class="flex flex-col gap-2">
+
+                    <label class="text-slate-700 font-semibold">
+                        PIN de acesso
+                    </label>
+
+                    <input
+                    type="password"
+                    name="pin"
+                    maxlength="6"
+                    placeholder="••••••"
+                    pattern="[0-9]{6}"
+                    required
+                    class="border border-slate-200 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
+                    >
+
+                </div>
+
+                <!-- BOTÃO -->
+                <button
+                type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-4 font-semibold shadow-lg transition duration-200"
+                >
+                    Concluir
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

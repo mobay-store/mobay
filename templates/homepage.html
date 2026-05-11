@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<!-- HEADER SEARCH -->
+<header class="h-8 mt-4">
+    <form class="flex flex-row items-center justify-center gap-4 w-full">
+        <input
+            type="text"
+            id="searchInput"
+            class="rounded-full text-md w-3/5 p-2 border border-gray-200"
+            placeholder="Pesquise algo"
+        >
+        <button type="button" class="w-10 h-10 border border-gray-200 rounded-full">A</button>
+        <button type="button" class="w-10 h-10 border border-gray-200 rounded-full">B</button>
+    </form>
+</header>
+
+<!-- HERO -->
+<div class="mt-8 p-4 text-xl text-white bg-gradient-to-r from-slate-900 to-blue-900 rounded-lg m-4 flex justify-around items-center w-[95%] md:w-[50%] m-auto">
+    Faz as suas compras e vendas de forma segura
+    <button class="w-2/5 h-12 bg-blue-600 rounded-xl m-2 p-2" onclick="window.location.href='/login'">Entrar</button>
+</div>
+
+<!-- FILTERS -->
+<div class="filters w-full md:w-[70%] m-auto h-16 flex justify-center items-center gap-2 p-1">
+    <select class="p-2 rounded-lg bg-white border border-gray-200" id="categoryFilter">
+        <option value="">Categoria</option>
+        <option value="telefones">Telefones</option>
+        <option value="computadore">Computadores</option>
+        <option value="tvs">Televisores</option>
+        <option value="roupas">Roupas</option>
+        <option value="electrodomesticos">Electrodomesticos</option>
+        <option value="utensilios">Utensilios</option>
+        <option value="som">Som</option>
+        <option value="brinquedos">Brinquedos</option>
+        <option value="documentos">Documentos</option>
+        <option value="alimentos">Alimentos</option>
+        <option value="bebidas">Bebidas</option>
+    </select>
+
+    <select id="priceFilter" class="w-[70px] p-2 rounded-lg bg-white border border-gray-200">
+        <option value="">Preço</option>
+        <option value="asc">Menor preço</option>
+        <option value="desc">Maior preço</option>
+    </select>
+
+    <select id="dateFilter" class="w-[70px] p-2 rounded-lg bg-white border border-gray-200">
+        <option value="">Data</option>
+        <option value="desc">Mais recentes</option>
+        <option value="asc">Mais antigos</option>
+    </select>
+</div>
+
+<!-- GRID (DINÂMICO) -->
+<main id="grid"
+    class="bg-slate-50 m-auto md:w-[70%] min-w-[90%] flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 auto-rows-[250px] md:auto-rows-[300px]">
+</main>
+
+<!-- MODAL -->
+<div id="modal" class="hidden fixed inset-0 bg-black/40 items-center justify-center z-50">
+    <div class="bg-white w-[90%] md:w-[400px] rounded-xl p-4 flex flex-col gap-3">
+
+        <img id="modalImg" class="w-full rounded-lg" src="">
+
+        <div class="flex flex-col">
+            <span id="modalTitle" class="text-xl font-bold"></span>
+            <span id="modalPrice" class="text-blue-600 font-bold"></span>
+        </div>
+
+        <div class="flex gap-2">
+            <button class="bg-blue-600 text-white p-2 rounded-lg w-full" id="detailsBtn">Detalhes</button>
+            <button class="bg-blue-600 text-white p-2 rounded-lg w-full" onclick="closeModal()">Fechar</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- FLOAT CHAT -->
+<a href="/mensagens" class="fixed bottom-24 right-5 z-50">
+    <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl shadow-lg">
+        💬
+    </div>
+</a>
+
+<!-- SCRIPT -->
+<script>
+
+let page = 1;
+const per_page = 4;
+
+let loading = false;
+let hasMore = true;
+
+let query = "";
+let category = "";
+let sort = "";
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const home = document.getElementById('home');
+    const anunciar = document.getElementById('anunciar');
+    const transacoes= document.getElementById('transacoes');
+    const perfil = document.getElementById('perfil');
+
+    perfil.classList.remove('text-blue-500');
+    anunciar.classList.remove('text-blue-500');
+    transacoes.classList.remove('text-blue-500');
+
+
+    home.classList.add('text-blue-500');
+
+});
+
+
+const grid = document.getElementById("grid");
+
+// -------------------- MODAL --------------------
+function openModal(title, price, id, image){
+    document.getElementById("modal").classList.remove("hidden");
+    document.getElementById("modal").classList.add("flex");
+
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalPrice").innerText = price;
+    document.getElementById("modalImg").src = image;
+    document.getElementById('detailsBtn').onclick = function(){ window.location.href = '/p/' + id; }
+}
+
+function closeModal(){
+    document.getElementById("modal").classList.add("hidden");
+    document.getElementById("modal").classList.remove("flex");
+}
+
+// -------------------- LOAD --------------------
+async function loadProducts(){
+
+    if (loading || !hasMore) return;
+
+    loading = true;
+
+    let url = `/produtos?page=${page}&per_page=${per_page}`;
+
+    if (query) url += `&q=${query}`;
+    if (category) url += `&category=${category}`;
+    if (sort) url += `&sort=${sort}`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.produtos.length < per_page) {
+            hasMore = false;
+        }
+
+        data.produtos.forEach(p => {
+
+            const card = document.createElement("div");
+            card.className = "bg-white rounded-2xl shadow-sm overflow-hidden cursor-pointer flex flex-col";
+
+            card.innerHTML = `
+                <div class="h-[70%] overflow-hidden">
+                    <img src="${p.imagem}" class="w-full h-full object-cover">
+                </div>
+
+                <div class="p-2 flex flex-col">
+                    <span class="font-bold text-gray-700">${p.titulo}</span>
+                    <span class="text-gray-500 text-sm">${p.provincia}</span>
+                    <span class="text-blue-600 font-bold">${p.preco} MZN</span>
+                </div>
+            `;
+
+            card.onclick = () => openModal(p.titulo, p.preco + " MZN", p.id, p.imagem);
+
+            grid.appendChild(card);
+        });
+
+        page++;
+
+    } catch(err){
+        console.log(err);
+    }
+
+    loading = false;
+}
+
+// -------------------- RESET --------------------
+function reset(){
+    page = 1;
+    hasMore = true;
+    grid.innerHTML = "";
+    loadProducts();
+}
+
+// -------------------- SEARCH --------------------
+let typing;
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+    clearTimeout(typing);
+
+    typing = setTimeout(() => {
+        query = e.target.value;
+        reset();
+    }, 400);
+});
+
+// -------------------- FILTERS --------------------
+document.getElementById("categoryFilter").addEventListener("change", (e) => {
+    category = e.target.value;
+    reset();
+});
+
+document.getElementById("priceFilter").addEventListener("change", (e) => {
+    const v = e.target.value;
+    sort = v === "asc" ? "price_asc" : v === "desc" ? "price_desc" : "";
+    reset();
+});
+
+document.getElementById("dateFilter").addEventListener("change", (e) => {
+    const v = e.target.value;
+    sort = v === "desc" ? "new" : v === "asc" ? "old" : "";
+    reset();
+});
+
+// -------------------- SCROLL --------------------
+window.addEventListener("scroll", () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        loadProducts();
+    }
+});
+
+// INIT
+loadProducts();
+
+</script>
+
+{% endblock %}

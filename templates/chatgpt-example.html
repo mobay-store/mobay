@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f6f6f6;
+      padding-bottom: 70px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      min-height: 100vh;
+    }
+
+    /* Product Image */
+    .product-image {
+      width: 100%;
+      height: 300px;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Product Info */
+    .product-info {
+      padding: 16px;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-size: 18px;
+      color: #1a8f3a;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    /* Action Buttons */
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .buy {
+      background: #1a8f3a;
+      color: white;
+    }
+
+    .cart {
+      background: #333;
+      color: white;
+    }
+
+    /* Floating Buttons */
+    .floating {
+      position: fixed;
+      right: 15px;
+      bottom: 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fab {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .chat {
+      background: #007bff;
+    }
+
+    .share {
+      background: #ff9800;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .nav-item {
+      font-size: 12px;
+      text-align: center;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 18px;
+    }
+
+    /* Desktop */
+    @media (min-width: 768px) {
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .product-image {
+        height: 400px;
+      }
+
+      .bottom-nav {
+        max-width: 900px;
+        margin: auto;
+      }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .product-image {
+height: 280px;
+
+overflow: hidden;
+background: #ddd;
+box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+ img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+/* THUMBS */
+.thumbs {
+display: flex;
+gap: 8px;
+margin-top: 10px;
+overflow-x: auto;
+}
+
+.thumb {
+width: 65px;
+height: 65px;
+border-radius: 10px;
+overflow: hidden;
+border: 2px solid transparent;
+flex-shrink: 0;
+cursor: pointer;
+}
+
+.thumb.active {
+border-color: var(--primary);
+}
+
+
+
+
+
+/* SELLER CARD */
+.seller-card {
+background: var(--card);
+padding: 14px;
+border-radius: 16px;
+margin-top: 12px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.seller-name {
+font-weight: 600;
+}
+
+.rating {
+font-size: 14px;
+color: #f59e0b;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="product-image"><img src="/static/imgs/image-product-4.jpg"></div>
+
+  <div class="product-info">
+    <div class="title">Nome do Produto</div>
+    
+    <div class="meta">
+        {{ product.available and "Disponível" or "Indisponível" }} • {{ product.created_at }}
+    </div>
+    
+    <div class="price">500 MZN</div>
+
+    <div class="description">
+      Descrição curta do produto. Aqui podes colocar detalhes importantes como qualidade, origem e características.
+    </div>
+
+    <div class="actions">
+      <button class="btn buy">Comprar</button>
+      <button class="btn cart">Compartilhar</button>
+    </div>
+
+  <div class="thumbs">
+    {% for img in images %}
+    <div class="thumb {% if loop.first %}active{% endif %}" onclick="changeImage(this)">
+        <img src="{{ img }}">
+    </div>
+    {% endfor %}
+</div>
+  </div>
+
+<div class="seller-card">
+    <div class="seller-name">{{ seller.name }}</div>
+    <div class="rating">★★★★★ ({{ seller.rating }})</div>
+</div>
+</div>
+
+
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <div class="nav-item">
+     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    <br>
+    Home
+  </div>
+  <div class="nav-item">
+
+    
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- saco/produto -->
+  <path d="M6 7h12l-1 14H7L6 7z"/>
+  <path d="M9 7V5a3 3 0 016 0v2"/>
+
+  <!-- botão + -->
+  <circle cx="18" cy="18" r="4"/>
+  <path d="M18 16v4M16 18h4"/>
+</svg>
+    <br>
+    Vender
+  </div>
+  <div class="nav-item">
+     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- carteira -->
+  <path d="M3 7h15a2 2 0 012 2v9a3 3 0 01-3 3H5a2 2 0 01-2-2V7z"/>
+  
+  <!-- fecho da carteira -->
+  <path d="M3 7V5a2 2 0 012-2h12a2 2 0 012 2v2"/>
+
+  <!-- moeda -->
+  <circle cx="17" cy="13" r="2"/>
+
+  <!-- símbolo de crescimento -->
+  <path d="M10 15l2-2 2 2 3-3"/>
+</svg>
+    <br>
+    Transa&ccedil;&otilde;es
+  </div>
+  <div class="nav-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </svg>
+    <br>
+    Perfil
+  </div>
+</div>
+
+</body>
+</html>

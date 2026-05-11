@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Joao{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/seller_profile.css') }}">
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="avatar"></div>
+    <div class="name">João Silva</div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="btn rate">Avaliar</button>
+    <button class="btn report">Reportar</button>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section">
+    <div class="title">Produtos ativos</div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="img"></div>
+        <div class="p-name">iPhone 11</div>
+        <div class="price">5000 MZN</div>
+      </div>
+
+      <div class="card">
+        <div class="img"></div>
+        <div class="p-name">Samsung A12</div>
+        <div class="price">3000 MZN</div>
+      </div>
+
+      <div class="card">
+        <div class="img"></div>
+        <div class="p-name">AirPods</div>
+        <div class="price">1200 MZN</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FLOATING -->
+<div class="floating">
+  <button class="fab chat">💬</button>
+
+</div>
+
+
+{% endblock %}

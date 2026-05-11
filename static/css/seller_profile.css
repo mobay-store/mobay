@@ -1,0 +1,123 @@
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:#f6f6f6;padding-bottom:80px} 
+
+
+    .container{max-width:900px;margin:auto;background:#fff;min-height:100vh}
+
+    /* HEADER */
+    .header{
+      padding:20px;
+      text-align:center;
+      border-bottom:1px solid #eee;
+    }
+
+    .avatar{
+      width:80px;
+      height:80px;
+      border-radius:50%;
+      background:#ddd;
+      margin:auto;
+    }
+
+    .name{
+      font-size:18px;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    /* ACTIONS */
+    .actions{
+      display:flex;
+      gap:10px;
+      padding:15px;
+    }
+
+    .btn{
+      flex:1;
+      padding:10px;
+      border:none;
+      border-radius:6px;
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    .rate{background:#1a8f3a;color:#fff}
+    .report{background:#e53935;color:#fff}
+
+    /* PRODUCTS */
+    .section{
+      padding:10px 15px;
+    }
+
+    .title{
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .card{
+      background:#fafafa;
+      border:1px solid #eee;
+      border-radius:10px;
+      padding:10px;
+      cursor:pointer;
+    }
+
+    .img{
+      width:100%;
+      height:110px;
+      background:#ddd;
+      border-radius:8px;
+      margin-bottom:8px;
+    }
+
+    .p-name{
+      font-size:13px;
+      font-weight:bold;
+    }
+
+    .price{
+      font-size:12px;
+      color:#1a8f3a;
+      margin-top:3px;
+    }
+
+
+    /* FLOATING */
+    .floating{
+      position:fixed;
+      right:15px;
+      bottom:90px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+
+    @media (min-width: 768px) {
+        .container {
+        width: 70%;
+          
+        }
+         .floating { right:180px;}
+
+    }
+
+    .fab{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      border:none;
+      color:#fff;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .chat{background:#007bff}
+    .share{background:#ff9800}

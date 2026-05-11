@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+
+<div class="min-h-screen bg-slate-50 flex flex-col pb-24">
+
+    <!-- PRODUCT BAR -->
+    <div class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
+
+        <div class="w-full md:w-[80%] lg:w-[65%] mx-auto p-4 flex items-center gap-4">
+
+            <!-- IMG -->
+            <div class="w-16 h-16 rounded-2xl overflow-hidden shrink-0 border border-slate-200">
+
+                {% set img = product.images | selectattr('url') | list | first %}
+
+                <img
+                src="/{{ img.url if img else 'static/img/default.jpg' }}"
+                class="w-full h-full object-cover"
+                >
+
+            </div>
+
+            <!-- INFO -->
+            <div class="flex-1 min-w-0">
+
+                <div class="text-slate-900 font-bold text-lg truncate">
+                    {{ product.titulo }}
+                </div>
+
+                <div class="text-blue-600 font-bold">
+                    {{ product.preco }} MZN
+                </div>
+
+            </div>
+
+            <!-- BUY -->
+            {% if product.user_id != session.get('user_id') %}
+
+            <button
+            onclick="window.location.href='/confirm/{{product.id}}'"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-2xl font-semibold shadow-lg transition duration-200"
+            >
+                Comprar
+            </button>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- CHAT -->
+    <div
+    id="chat"
+    class="flex-1 w-full md:w-[80%] lg:w-[65%] mx-auto p-4 flex flex-col gap-4 overflow-y-auto"
+    >
+
+        {% for msg in messages %}
+
+        <!-- MESSAGE -->
+        <div class="flex {% if msg.sender_id == session['user_id'] %}justify-end{% else %}justify-start{% endif %}">
+
+            <div
+            class="
+            max-w-[80%]
+            px-5
+            py-3
+            rounded-3xl
+            shadow-sm
+            text-[15px]
+            leading-relaxed
+
+            {% if msg.sender_id == session['user_id'] %}
+                bg-blue-600 text-white rounded-br-md
+            {% else %}
+                bg-white border border-slate-200 text-slate-700 rounded-bl-md
+            {% endif %}
+            "
+            >
+
+                {{ msg.conteudo }}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- INPUT AREA -->
+    <div class="fixed bottom-20 left-0 w-full z-50 px-4">
+
+        <div class="w-full md:w-[80%] lg:w-[65%] mx-auto bg-white border border-slate-200 rounded-3xl shadow-2xl p-3 flex items-center gap-3">
+
+            <!-- IMAGE -->
+            <label class="w-12 h-12 rounded-2xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center cursor-pointer transition duration-200 shrink-0">
+
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-slate-700"
+                >
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.159 2.159M3.75 3.75h16.5v16.5H3.75V3.75Zm4.5 4.5h.008v.008H8.25V8.25Z"
+                    />
+                </svg>
+
+                <input
+                type="file"
+                id="imgInput"
+                accept="image/*"
+                class="hidden"
+                >
+
+            </label>
+
+            <!-- INPUT -->
+            <input
+            type="text"
+            id="textInput"
+            placeholder="Escrever mensagem..."
+            class="flex-1 w-[50%] bg-slate-100 border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
+            >
+
+            <!-- SEND -->
+            <button
+            onclick="sendMsg()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-2xl font-semibold shadow-lg transition duration-200"
+            >
+                Enviar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const chat = document.getElementById('chat');
+const imgInput = document.getElementById('imgInput');
+const textInput = document.getElementById('textInput');
+
+const PRODUCT_ID = {{ product.id or 0 }};
+const RECEIVER_ID = {{ product.user_id or 0 }};
+const CHAT_ID = {{ chat_id or 0 }};
+
+chat.scrollTop = chat.scrollHeight;
+
+imgInput.addEventListener('change', function(){
+
+    const file = this.files[0];
+
+    if(!file) return;
+
+    const url = URL.createObjectURL(file);
+
+    const wrapper = document.createElement('div');
+
+    wrapper.className = 'flex justify-end';
+
+    wrapper.innerHTML = `
+
+        <div class="max-w-[80%] bg-blue-600 rounded-3xl rounded-br-md overflow-hidden shadow-sm">
+
+            <img src="${url}" class="w-full rounded-2xl">
+
+        </div>
+
+    `;
+
+    chat.appendChild(wrapper);
+
+    chat.scrollTop = chat.scrollHeight;
+
+});
+
+window.sendMsg = function() {
+
+    const text = textInput.value.trim();
+
+    if (!text) return;
+
+    fetch("/chat/send", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            product_id: PRODUCT_ID,
+            conteudo: text,
+            receiver_id: RECEIVER_ID,
+            chat_id: CHAT_ID,
+
+        })
+
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        const wrapper = document.createElement('div');
+
+        wrapper.className = 'flex justify-end';
+
+        wrapper.innerHTML = `
+
+            <div class="
+                max-w-[80%]
+                px-5
+                py-3
+                rounded-3xl
+                rounded-br-md
+                bg-blue-600
+                text-white
+                shadow-sm
+                text-[15px]
+                leading-relaxed
+            ">
+                ${text}
+            </div>
+
+        `;
+
+        chat.appendChild(wrapper);
+
+        textInput.value = '';
+
+        chat.scrollTop = chat.scrollHeight;
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

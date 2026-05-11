@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}MoBay - Oficial{% endblock %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="home-container">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-pill">🔥 Ganhe — At&eacute; 50% de comiss&atilde;o</div>
+  <h1>Agora voc&ecirc; <br>pode comprar ou <br>vender com mais<em> seguran&ccedil;a</em></h1>
+  <p>Evite burlas, compre ou venda usando a plataforma</p>
+  {% if not session.get('user_id') %}
+  <a class="hero-cta" href="/login">Entrar →</a>
+  {%endif%}
+</div>
+
+  <!-- SEARCH -->
+  <div class="search">
+    <input type="text" id="searchInput" placeholder="Pesquisar produtos...">
+  </div>
+<!-- FILTERS --> <div class="filters">
+ <select id="categoryFilter">
+
+      <option value="">Seleciona a categoria</option>
+      <option value="telefones">Telefones</option>
+      <option value="computadore">Computadores</option>
+      <option value="tvs">Televisores</option>
+      <option value="roupas">Roupas</option>
+      <option value="electrodomesticos">Electrodomesticos</option>
+      <option value="utensilios">Utensilios</option>
+      <option value="som">Som</option>
+      <option value="brinquedos">Brinquedos</option>
+      <option value="documentos">Documentos</option>
+      <option value="alimentos">Alimentos</option>
+      <option value="bebidas">Bebidas</option>
+
+</select>
+
+<select id="priceFilter">
+  <option value="">Preço</option>
+  <option value="asc">Menor preço</option>
+  <option value="desc">Maior preço</option>
+</select>
+
+<select id="dateFilter">
+  <option value="">Data</option>
+  <option value="desc">Mais recentes</option>
+  <option value="asc">Mais antigos</option>
+</select>
+</div>
+<!-- PRODUCTS -->
+<div class="grid" id="grid">
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+
+    <div class="modal-img"><img id="image" src="" alt=""></div>
+
+    <h3 id="m-title"></h3>
+    <p id="m-price"></p>
+
+    <div class="modal-actions">
+      <button class="btn buy" id="detailsBtn">Detalhes</button>
+      <button class="btn share"><a
+  href="https://wa.me/?text=Olha%20este%20produto%20https://teusite.com/produto/123"
+  target="_blank"
+  class="btn-share" style="text-decoration: none; color: white;">
+
+
+      Compartilhar
+      </a></button>
+      <button class="btn close" onclick="closeModal()">Fechar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- FLOATING -->
+<div class="floating">
+  <button class="fab share" onclick="window.location.href='/messages'">💬</button>
+</div>
+<script>
+
+function openModal(title, price, id, imageUrl){
+    document.getElementById('modal').style.display='flex';
+    document.getElementById('m-title').innerText = title;
+    document.getElementById('m-price').innerText = price;
+    document.getElementById('image').src = imageUrl; // atualizar botão detalhes dinamicamente
+    document.getElementById('detailsBtn').onclick = function(){ window.location.href = '/p/' + id; }
+
+}
+    function closeModal(){
+        document.getElementById('modal').style.display='none';
+
+
+    }
+
+
+
+
+let page = 1;
+const per_page = 4;
+
+let loading = false;
+let hasMore = true;
+
+let query = "";
+let category = "";
+let sort = "";
+
+const grid = document.getElementById("grid");
+
+// ----------------------
+// LOAD PRODUCTS
+// ----------------------
+async function loadProducts(){
+
+  if (loading || !hasMore) return;
+
+  loading = true;
+
+  let url = `/produtos?page=${page}&per_page=${per_page}`;
+
+  if (query) url += `&q=${query}`;
+  if (category) url += `&category=${category}`;
+  if (sort) url += `&sort=${sort}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.produtos.length < per_page) {
+      hasMore = false;
+    }
+
+    data.produtos.forEach(p => {
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.onclick = () => openModal(
+        p.titulo,
+        p.preco + " MZN",
+        p.id,
+        p.imagem
+      );
+
+      card.innerHTML = `
+        <div class="img">
+
+          <img src="${p.imagem || ''}" alt="">
+        </div>
+        <div class="title">${p.titulo} (${p.provincia})</div>
+        <div class="price">${p.preco} MZN</div>
+        <div class="meta">${p.data_criacao || ''} </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    page++;
+
+  } catch(err){
+    console.error(err);
+  }
+
+  loading = false;
+}
+
+// ----------------------
+// RESET
+// ----------------------
+function resetAndLoad(){
+  page = 1;
+  hasMore = true;
+  grid.innerHTML = "";
+  loading = false;
+  loadProducts();
+}
+
+// ----------------------
+// SEARCH
+// ----------------------
+let typingTimer;
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+
+  clearTimeout(typingTimer);
+
+  typingTimer = setTimeout(() => {
+    query = e.target.value.trim();
+    resetAndLoad();
+  }, 400);
+
+});
+
+// ----------------------
+// FILTERS
+// ----------------------
+document.getElementById("categoryFilter").addEventListener("change", (e) => {
+  category = e.target.value;
+  resetAndLoad();
+});
+
+document.getElementById("priceFilter").addEventListener("change", (e) => {
+  const val = e.target.value;
+
+  if (val === "asc") sort = "price_asc";
+  else if (val === "desc") sort = "price_desc";
+  else sort = "";
+
+  resetAndLoad();
+});
+
+document.getElementById("dateFilter").addEventListener("change", (e) => {
+  const val = e.target.value;
+
+  if (val === "desc") sort = "new";
+  else if (val === "asc") sort = "old";
+  else sort = "";
+
+  resetAndLoad();
+});
+
+// ----------------------
+// INFINITE SCROLL
+// ----------------------
+window.addEventListener("scroll", () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+    loadProducts();
+  }
+});
+
+// inicial
+loadProducts();
+
+
+
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+
+  clearTimeout(typingTimer);
+
+  typingTimer = setTimeout(() => {
+
+    query = e.target.value.trim();
+
+    resetAndLoad();
+
+  }, 400);
+
+});
+</script>
+
+{%endblock%}
+
+
+

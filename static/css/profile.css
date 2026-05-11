@@ -1,0 +1,53 @@
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:#f6f6f6;padding-bottom:80px}
+  .container{max-width:900px;margin:auto;background:#fff;min-height:100vh}
+
+    /* Header */
+    .header{padding:16px;text-align:center}
+    .avatar{width:70px;height:70px;border-radius:50%;background:#ddd;margin:auto; display: flex; align-items: center;overflow:hidden;}
+    .avatar img{object-fit: contain; width: 100%;}
+
+    .name{font-size:18px;font-weight:bold;margin-top:10px}
+    .phone{font-size:12px;color:#777;margin-top:2px}
+
+    .actions{margin-top:12px;display:flex;gap:10px;padding:0 16px}
+    .btn{flex:1;padding:10px;border:none;border-radius:6px;font-size:13px;cursor:pointer}
+    .primary{background:#1a8f3a;color:#fff}
+    .secondary{background:#333;color:#fff}
+    .container{max-width:900px;margin:auto;background:#fff;min-height:100vh}
+
+    /* Menu */
+    .menu{margin-top:20px}
+    .menu-item{padding:14px 16px;border-bottom:1px solid #eee;font-size:14px;color:#333;display:flex;justify-content:space-between;cursor:pointer;}
+
+        /* FLOATING */
+    .floating{
+      position:fixed;
+      right:15px;
+      bottom:100px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+
+    @media (min-width: 768px) {
+        .container {
+        width: 70%;
+
+        }
+         .floating { right:200px;}
+
+    }
+
+    .fab{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      border:none;
+      color:#fff;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .share{background:#ff9800}

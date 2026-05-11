@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.titulo }}{% endblock %}
+
+{% block content %}
+
+<div class="min-h-screen bg-slate-50 pb-32">
+
+    <!-- CONTAINER -->
+    <div class="w-full md:w-[80%] lg:w-[65%] mx-auto">
+
+        <!-- IMAGEM PRINCIPAL -->
+        <div class="w-full h-[320px] md:h-[500px] overflow-hidden bg-white">
+
+            {% if product.images %}
+            <img
+            id="mainImage"
+            src="/{{ product.images[0].url }}"
+            class="w-full h-full object-cover"
+            >
+            {% else %}
+            <img
+            id="mainImage"
+            src="{{ url_for('static', filename='img/demo.jpg') }}"
+            class="w-full h-full object-cover"
+            >
+            {% endif %}
+
+        </div>
+
+        <!-- GALERIA -->
+        <div class="flex gap-3 overflow-x-auto p-4">
+
+            {% for img in product.images %}
+
+            <img
+            src="/{{ img.url }}"
+            onclick="changeImage(this)"
+            class="thumb w-24 h-24 rounded-2xl object-cover border-2 {% if loop.first %}border-blue-500{% else %}border-slate-200{% endif %} shrink-0 cursor-pointer transition"
+            >
+
+            {% endfor %}
+
+        </div>
+
+        <!-- CONTEÚDO -->
+        <div class="p-4 flex flex-col gap-5">
+
+            <!-- HEADER -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="flex flex-col gap-2">
+
+                        <span class="text-3xl font-bold text-slate-900">
+                            {{ product.titulo }}
+                        </span>
+
+                        <div class="flex items-center gap-2 text-slate-500">
+
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                            >
+                                <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                />
+                                <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                                />
+                            </svg>
+
+                            <span>
+                                {{ product.provincia }} • {{ criado_em }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- PREÇO -->
+                    <div class="bg-blue-50 text-blue-700 px-4 py-3 rounded-2xl text-xl font-bold">
+
+                        {{ product.preco }} MZN
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- DESCRIÇÃO -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm flex flex-col gap-4">
+
+                <div class="flex items-center gap-2">
+
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center">
+
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5 text-slate-700"
+                        >
+                            <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17.25 6.75v10.5M6.75 6.75v10.5m10.5-10.5h-10.5"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <h2 class="text-xl font-bold text-slate-900">
+                        Descrição
+                    </h2>
+
+                </div>
+
+                <p class="text-slate-600 leading-relaxed whitespace-pre-line">{{ product.descricao }}</p>
+
+            </div>
+
+            <!-- VENDEDOR -->
+            <div
+            onclick="window.location.href='/seller'"
+            class="bg-white rounded-3xl border border-slate-200 p-5 shadow-sm flex items-center justify-between cursor-pointer hover:bg-slate-50 transition"
+            >
+
+                <div class="flex items-center gap-4">
+
+                    <!-- AVATAR -->
+                    <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center">
+
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-7 h-7 text-blue-600"
+                        >
+                            <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="flex flex-col">
+
+                        <span class="font-bold text-slate-900">
+                            {{ product.owner.nome }}
+                        </span>
+
+                        <span class="text-slate-500 text-sm">
+                            Proprietário do anúncio
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- BOTÃO -->
+                <button
+                class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-3 rounded-2xl font-semibold transition duration-200"
+                >
+                    Ver perfil
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM ACTION -->
+    {% if product.user_id != session.get('user_id') %}
+    <div class="fixed bottom-20 left-0 w-full px-4 z-40">
+
+        <div class="w-full md:w-[80%] lg:w-[65%] mx-auto bg-white border border-slate-200 rounded-3xl shadow-2xl p-4 flex gap-3">
+
+            <!-- CHAT -->
+            <button
+            onclick="window.location.href='/chat/res/None+{{product.id}}+{{buyer_id}}'"
+            class="flex items-center justify-center w-16 rounded-2xl bg-slate-100 hover:bg-slate-200 transition duration-200"
+            >
+
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-7 h-7 text-slate-700"
+                >
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m3.75 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.97-4.03 9-9 9a8.96 8.96 0 0 1-4.255-1.071L3 21l1.071-4.745A8.96 8.96 0 0 1 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9Z"
+                    />
+                </svg>
+
+            </button>
+
+            <!-- COMPARTILHAR -->
+            <a
+            onclick="generateImage('{{product.titulo}}')"
+
+            target="_blank"
+            class="flex-1"
+            >
+
+                <button
+
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-4 text-lg font-semibold shadow-lg transition duration-200"
+                >
+                    Compartilhar
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- FLOATING -->
+<a
+href="/mensagens"
+class="fixed bottom-24 right-5 z-50 group"
+>
+
+    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl flex items-center justify-center transition duration-300 hover:scale-110 active:scale-95">
+
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-8 h-8 text-white"
+        >
+            <path fill-rule="evenodd" d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z" clip-rule="evenodd" />
+        </svg>
+
+    </div>
+
+</a>
+
+
+
+{% set img = product.images | selectattr('url') | list | first %}
+<div id="shareCard" class="fixed -left-[9999px] w-[400px] bg-white overflow-hidden">
+
+  <img src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}" class=" w-full object-contain">
+
+  <div class="p-5">
+    <h1 class="text-2xl font-bold">
+      {{ product.titulo }}
+    </h1>
+
+    <div class="text-3xl font-black text-green-600 mt-3">
+      {{ product.preco }} MZN
+    </div>
+
+    <div class="mt-4 text-gray-500">
+      Vendido por: {{ product.owner.nome }}
+    </div>
+
+    <div class="mt-6 font-bold text-orange-400 fon-gold">
+      mobay
+    </div>
+  </div>
+
+</div>
+
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+
+async function generateImage(titulo) {
+
+    const card = document.getElementById("shareCard");
+
+    const canvas = await html2canvas(card, {
+        scale: 3
+    });
+
+    const image = canvas.toDataURL("image/png");
+
+    // download
+    const link = document.createElement("a");
+
+    link.download = titulo+".png";
+    link.href = image;
+
+    link.click();
+
+    // copiar link
+    await navigator.clipboard.writeText(window.location.href);
+
+    alert("Imagem gerada e link copiado!");
+}
+
+
+
+
+const mainImage = document.getElementById('mainImage');
+const thumbs = document.querySelectorAll('.thumb');
+
+function changeImage(el) {
+
+    mainImage.src = el.src;
+
+    thumbs.forEach(thumb => {
+        thumb.classList.remove('border-blue-500');
+        thumb.classList.remove('border-2');
+        thumb.classList.add('border-slate-200');
+    });
+
+    el.classList.remove('border-slate-200');
+    el.classList.add('border-blue-500');
+    el.classList.add('border-2');
+
+}
+
+</script>
+
+{% endblock %}

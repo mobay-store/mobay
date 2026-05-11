@@ -1,0 +1,67 @@
+from models import Product, db, Transaction, User
+
+from flask import Blueprint, render_template, session, redirect, request, flash
+
+confirm_bp = Blueprint("confirm", __name__)
+
+@confirm_bp.route("/confirm/<int:product_id>")
+def confirm(product_id):
+
+    product = Product.query.filter_by(id=product_id).first()
+
+
+
+
+    return render_template("confirm.html", product=product)
+
+@confirm_bp.route("/confirm/submit", methods=["POST", "GET"])
+def confirm_submit():
+
+    if request.method == "POST":
+
+        destino = request.form.get("destino")
+
+        pin = request.form.get("pin")
+        destino = request.form.get("destino")
+
+
+        product_id = int(request.form.get("product_id"))
+
+        product = Product.query.filter_by(id=product_id).first()
+
+        buyer_id = session.get("user_id")
+
+        user = User.query.get_or_404(buyer_id)
+
+        if pin != user.pin:
+            flash("PIN incorreto")
+            return redirect(f"/confirm/{product_id}")
+
+        if product.user_id == buyer_id:
+            return "Erro fatal"
+
+        seller_id = product.user_id
+
+
+        transaction = Transaction.query.filter_by(product_id=product_id, buyer_id
+        =buyer_id).first()
+
+        if transaction:
+            flash("Transacao ja existente")
+            return redirect("/transactions")
+
+
+
+
+        transaction = Transaction(
+            product_id = product_id,
+            buyer_id = buyer_id,
+            seller_id = seller_id,
+            destino = destino,
+        )
+
+        db.session.add(transaction)
+        db.session.commit()
+    return redirect("/transactions")
+
+

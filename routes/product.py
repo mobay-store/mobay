@@ -1,0 +1,120 @@
+from flask import Blueprint, render_template, request, redirect, session, flash
+from services.product_service import get_product
+from models import Product, ProductImage, db, User
+import os, uuid
+from werkzeug.utils import secure_filename
+from PIL import Image
+
+product_bp = Blueprint("product", __name__)
+
+UPLOAD_FOLDER = "static/uploads"
+
+@product_bp.route("/p/<slug>")
+def product_page(slug):
+    data = get_product(slug)
+    buyer_id = session.get("user_id")
+    return render_template("product.html", product=data, buyer_id=buyer_id, criado_em = data.criado_em.strftime("%d %b %Y"))
+
+
+@product_bp.route("/vender", methods=["GET", "POST"])
+def add_product():
+    from models import User
+
+    if not session.get("logged"):
+        return redirect("/login")
+
+    if request.method == "POST":
+        files = request.files.getlist("images")
+        valid_files = [f for f in files if f and f.filename != ""]
+
+        if not valid_files:
+            return "Adiciona pelo menos uma imagem"
+
+        user = User.query.filter_by(telefone=session["logged"]).first()
+        if not user:
+            return redirect("/login")
+
+        try:
+            preco = float(request.form["preco"])
+        except:
+            return "Preço inválido"
+
+        product = Product(
+            user_id=user.id,
+            titulo=request.form["titulo"],
+            preco=preco,
+            descricao=request.form.get("descricao"),
+            categoria=request.form.get("categoria"),
+            provincia = request.form.get("provincia"),
+        )
+
+        db.session.add(product)
+        db.session.flush()  # evita commit precoce
+
+        for file in valid_files[:3]:
+            try:
+                img = Image.open(file)
+                img.thumbnail((800, 800))
+
+                filename = f"{uuid.uuid4()}_{secure_filename(file.filename)}"
+
+                full_path = os.path.join(UPLOAD_FOLDER, filename)
+
+                img.save(full_path, optimize=True, quality=70)
+
+                db.session.add(ProductImage(
+                    product_id=product.id,
+                    url=full_path
+                ))
+
+            except Exception as e:
+                print("Erro na imagem:", e)
+                continue
+
+        db.session.commit()
+
+        return redirect(f"/p/{product.id}")
+
+    return render_template("add_product.html")
+
+
+
+@product_bp.route("/stock")
+def stock():
+
+    products = Product.query.filter_by(user_id=session.get("user_id")).all()
+    return render_template("stock.html", products=products)
+
+@product_bp.route("/del-prod", methods=["POST", "GET"])
+def del_prod():
+    user_id = session.get("user_id")
+    product_id = request.form.get("product_id")
+    pin = request.form.get("pin")
+
+
+    if not user_id:
+        return redirect("/login")
+    product = Product.query.get_or_404(product_id)
+
+    if user_id != product.user_id:
+        return "Bitch"
+
+
+    user = User.query.get_or_404(user_id)
+
+    if user.pin != pin:
+        flash("PIN incorrecto", "error")
+        return redirect("/stock")
+    # 1. apagar arquivos físicos primeiro
+    for img in product.images:
+        if img.url and os.path.exists(img.url):
+            try:
+                os.remove(img.url)
+            except Exception as e:
+                print("Erro ao apagar imagem:", e)
+
+    # 2. depois apagar do banco
+    db.session.delete(product)
+    db.session.commit()
+
+    return redirect("/stock")

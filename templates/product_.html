@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+<div class="w-full min-h-screen md:p-5 md:grid md:grid-cols-4 ">
+    
+    <!-- esquerda -->
+    <div class="flex w-full h-20 items-center  md:h-full md:w-2/3">
+        <ul class="flex flex-row w-full justify-around gap-2 shadow-[0_4px_6px_rgba(0,0,0,0.1)] md:flex-col md:h-full md:w-full md:p-6">
+            <li class="menu-item flex flex-col tracking-wide text-gray-700 items-center border-b-2 border-green-400 text-green-500 text-sm md:text-xl">
+                <svg class= width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span class="">Home</span>
+            </li>
+            <li class="menu-item flex flex-col tracking-wide text-gray-700 items-center text-sm md:text-xl">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- saco/produto -->
+                    <path d="M6 7h12l-1 14H7L6 7z"/>
+                    <path d="M9 7V5a3 3 0 016 0v2"/>
+
+                    <!-- botão + -->
+                    <circle cx="18" cy="18" r="4"/>
+                    <path d="M18 16v4M16 18h4"/>
+                </svg>
+                <span class="">Vender</span>
+            </li>
+            <li class="menu-item flex flex-col tracking-wide text-gray-700 items-center text-sm md:text-xl">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- carteira -->
+                    <path d="M3 7h15a2 2 0 012 2v9a3 3 0 01-3 3H5a2 2 0 01-2-2V7z"/>
+                    
+                    <!-- fecho da carteira -->
+                    <path d="M3 7V5a2 2 0 012-2h12a2 2 0 012 2v2"/>
+
+                    <!-- moeda -->
+                    <circle cx="17" cy="13" r="2"/>
+
+                    <!-- símbolo de crescimento -->
+                    <path d="M10 15l2-2 2 2 3-3"/>
+                </svg>
+                <span class="">Transa&ccedil;&otilde;es</span>
+            </li>
+            <li class="menu-item flex flex-col tracking-wide text-gray-700 items-center text-sm md:text-xl">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span class="">Perfil</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Corpo -->
+    <div class="w-full md:col-span-3">
+        <div class="w-full flex items-center justify-center p-2 relative">
+            <img src="/{{product.images[0].url}}" alt="poduct image" class=" rounded-md md:w-full h-full md:h-[500px] flex object-cover">
+            <button class="bg-green-200 rounded-lg text-gray-700 text-sm font-bold p-2 absolute top-4 right-4 ">
+                {{product.preco}} Mt
+            </button>
+        
+        </div>
+
+        <!-- Titulo e badges -->
+         
+        <div class="gap-2 p-2 flex flex-row">
+            <span class="font-bold text-sm">
+                {{product.titulo}} <a href="" class="uppercase underline text-green-500">Ver mais</a>
+            </span>
+            <span class="rounded-full bg-gray-200 w-8 h-8 text-xs  flex items-center justify-center p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                </svg>
+
+            </span>
+            <span class="rounded-full bg-gray-200 w-8 h-8 text-xs flex items-center justify-center p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                </svg>
+            </span>
+        </div>
+
+        <!-- Fotos -->
+         
+        <div class="flex flex-row justify-start items-center gap-4 p-4">
+            {% for img in product.images %}
+            <img src="/{{ img.url }}" alt="" class="w-16 h-16 rounded-md">
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="flex justify-center"><button class="bg-green-500 rounded-lg w-2/5 text-white text-sm font-bold p-2  top-4 right-4 ">Negociar</button></div>
+
+                
+            
+</div>
+</body>
+</html>

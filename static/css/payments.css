@@ -1,0 +1,154 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:#f6f6f6;padding-bottom:80px}
+
+    .container{
+      max-width:700px;
+      margin:auto;
+      background:#fff;
+      min-height:100vh;
+    }
+
+    .header{
+      padding:16px;
+      font-size:18px;
+      font-weight:bold;
+      border-bottom:1px solid #eee;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    /* ADD BUTTON */
+    .add-btn{
+      background:#1a8f3a;
+      color:#fff;
+      border:none;
+      padding:8px 12px;
+      border-radius:6px;
+      font-size:12px;
+      cursor:pointer;
+    }
+
+    /* LIST */
+    .list{
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .card{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px;
+      border:1px solid #eee;
+      border-radius:10px;
+      background:#fafafa;
+    }
+
+    .info{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+
+    .type{
+      font-size:13px;
+      font-weight:bold;
+    }
+
+    .number{
+      font-size:12px;
+      color:#666;
+    }
+
+    .tag{
+      font-size:10px;
+      padding:3px 8px;
+      border-radius:20px;
+      background:#e6f7ec;
+      color:#1a8f3a;
+      display:inline-block;
+      width:fit-content;
+    }
+
+    /* ACTIONS */
+    .actions{
+      display:flex;
+      gap:5px;
+    }
+
+    .btn{
+      border:none;
+      padding:6px 8px;
+      border-radius:6px;
+      font-size:11px;
+      cursor:pointer;
+    }
+
+    .edit{background:#333;color:#fff}
+    .delete{background:#e53935;color:#fff}
+
+    /* EMPTY STATE */
+    .empty{
+      text-align:center;
+      padding:40px;
+      color:#777;
+      font-size:13px;
+    }
+
+    /* NAV */
+    .bottom-nav{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      height:60px;
+      background:#fff;
+      border-top:1px solid #ddd;
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+    }
+
+    .nav-item{
+      font-size:12px;
+      text-align:center;
+      color:#555;
+    }
+
+    .nav-item span{
+      display:block;
+      font-size:18px;
+    }
+
+
+              /* FLOATING */
+    .floating{
+      position:fixed;
+      right:15px;
+      bottom:100px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    @media (min-width: 768px) {
+        .container {
+        width: 70%;
+          
+        }
+         .floating { right:190px;}
+
+    .fab{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      border:none;
+      color:#fff;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .share{background:#ff9800}

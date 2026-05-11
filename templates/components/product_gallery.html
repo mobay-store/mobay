@@ -1,0 +1,16 @@
+<div class="gallery">
+    <div class="main-image">
+        <img id="mainImage" src="{{ images[0] }}">
+    </div>
+
+
+<div class="thumbs">
+    {% for img in images %}
+    <div class="thumb {% if loop.first %}active{% endif %}" onclick="changeImage(this)">
+        <img src="{{ img }}">
+    </div>
+    {% endfor %}
+</div>
+
+
+</div>

@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+
+
+{% block title %}Transacoes{% endblock %}
+{% block content %}
+
+<div class="overflow-auto bg-slate-50 p-4">
+
+    <!-- HEADER -->
+    <div class="w-full md:w-[70%] lg:w-[55%] mx-auto mb-6">
+
+        <h1 class="text-3xl font-bold text-slate-900">
+            Transações
+        </h1>
+
+        <p class="text-slate-500 mt-1">
+            Acompanhe suas compras e vendas
+        </p>
+
+    </div>
+
+    <!-- CONTAINER -->
+
+    <div class="w-full md:w-[70%] lg:w-[55%] mx-auto flex flex-col gap-6">
+
+
+
+        <!-- COMPRAS SUCEDIDAS -->
+        <section class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+
+            <div class="flex items-center gap-3 mb-5">
+
+                <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
+
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 text-green-600"
+                    >
+                        <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m4.5 12.75 6 6 9-13.5"
+                        />
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h2 class="text-xl font-bold text-slate-900">
+                        Compras sucedidas
+                    </h2>
+
+                    <span class="text-slate-500 text-sm">
+                        Produtos recebidos com sucesso
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            {% for t in transactions %}
+            {% if t.status == 'confirmada' and session.get('user_id') == t.buyer_id %}
+            <div class="border border-slate-200 rounded-2xl p-4 flex items-center gap-4">
+
+                <img
+                src="{{ url_for('static', filename='img/demo.jpg') }}"
+                class="w-20 h-20 rounded-xl object-cover"
+                >
+
+                <div class="flex-1">
+
+                    <h3 class="font-bold text-slate-800">
+                        {{t.product.titulo}}
+                    </h3>
+
+                    <span class="text-slate-500 text-sm">
+                        Comprado em 05 Maio 2026
+                    </span>
+
+                    <div class="mt-2">
+                        <span class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-semibold">
+                            Recebido
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+            {% endif %}
+            {% endfor %}
+
+
+        </section>
+
+
+        <!-- VENDAS SUCEDIDAS -->
+        <section class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+
+            <div class="flex items-center gap-3 mb-5">
+
+                <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 text-blue-600"
+                    >
+                        <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 3h1.386a.75.75 0 0 1 .728.568l.893 3.572m0 0L6.75 13.5h10.5l1.857-6.36a.75.75 0 0 0-.728-.96H5.257Z"
+                        />
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h2 class="text-xl font-bold text-slate-900">
+                        Vendas sucedidas
+                    </h2>
+
+                    <span class="text-slate-500 text-sm">
+                        Produtos vendidos com sucesso
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- ITEM -->
+            {% for t in transactions %}
+            {% if t.status == 'confirmada' and session.get('user_id') == t.seller_id %}
+            <div class="border border-slate-200 rounded-2xl p-4 flex items-center gap-4">
+
+                {% set img = t.product.images | selectattr('url') | list | first %}
+                <img
+                src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+                class="w-20 h-20 rounded-xl object-cover"
+                >
+
+                <div class="flex-1">
+
+                    <h3 class="font-bold text-slate-800">
+                        {{t.product.titulo}}
+                    </h3>
+
+                    <span class="text-slate-500 text-sm">
+                        Vendido em 02 Maio 2026
+                    </span>
+
+                    <div class="mt-2">
+                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-semibold">
+                            Entregue
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+            {% endif %}
+            {% endfor %}
+
+        </section>
+
+        <!-- PENDENTES -->
+        <!-- PENDENTES -->
+<section class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+
+    <div class="flex items-center gap-3 mb-5">
+
+        <div class="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center">
+
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 text-yellow-600"
+            >
+                <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6v6h4.5"
+                />
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h2 class="text-xl font-bold text-slate-900">
+                Pendentes
+            </h2>
+
+            <span class="text-slate-500 text-sm">
+                Compras e vendas aguardando confirmação
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="flex flex-col gap-5">
+
+        <!-- PENDENTE DE ENTRADA -->
+        {% for t in transactions %}
+        {% if t.status == 'pendente' and session.get('user_id') == t.buyer_id %}
+        <div class="border border-slate-200 rounded-2xl p-4 flex flex-col gap-4">
+
+            <div class="flex items-center gap-4">
+
+                {% set img = t.product.images | selectattr('url') | list | first %}
+
+                <img
+                src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+                class="w-20 h-20 rounded-xl object-cover"
+                >
+
+                <div class="flex-1">
+
+                    <h3 class="font-bold text-slate-800">
+                        {{t.product.titulo}}
+                    </h3>
+
+                    <span class="text-slate-500 text-sm block">
+                        Compra pendente
+                    </span>
+
+                    <span class="text-yellow-600 text-sm font-semibold">
+                        Aguardando recepção
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- BOTÕES -->
+            <div class="flex gap-3">
+
+                <!-- CONFIRMAR -->
+                <button
+                class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-xl p-3 font-semibold transition duration-200"
+                >
+                    Confirmar recepção
+                </button>
+
+                <!-- REPORTAR -->
+                <button
+                class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-xl p-3 font-semibold transition duration-200"
+                >
+                    Reportar
+                </button>
+
+            </div>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <!-- PENDENTE DE SAÍDA -->
+        {% for t in transactions %}
+        {% if t.status == 'pendente' and session.get('user_id') == t.seller_id %}
+        <div class="border border-slate-200 rounded-2xl p-4 flex flex-col gap-4 bg-slate-50">
+
+            <div class="flex items-center gap-4">
+
+                {% set img = t.product.images | selectattr('url') | list | first %}
+
+                <img
+                src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
+                class="w-20 h-20 rounded-xl object-cover"
+                >
+
+                <div class="flex-1">
+
+                    <h3 class="font-bold text-slate-800">
+                        {{t.product.titulo}}
+                    </h3>
+
+                    <span class="text-slate-500 text-sm block">
+                        Venda pendente
+                    </span>
+
+                    <span class="text-blue-600 text-sm font-semibold">
+                        Aguardando confirmação do comprador
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- ESTADO -->
+            <div class="bg-blue-100 text-blue-700 rounded-xl p-3 text-sm font-semibold text-center">
+
+                Produto entregue. À espera da confirmação do comprador.
+
+            </div>
+
+            <!-- BOTÃO -->
+            <button
+            class="bg-red-500 hover:bg-red-600 text-white rounded-xl p-3 font-semibold transition duration-200"
+            >
+                Reportar problema
+            </button>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+
+</section>
+
+    </div>
+
+</div>
+
+
+<a
+href="/mensagens"
+class="fixed bottom-24 right-5 z-50 group"
+>
+
+    <!-- BOTÃO -->
+    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl flex items-center justify-center transition duration-300 hover:scale-110 active:scale-95">
+
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-8 h-8 text-white"
+        >
+            <path fill-rule="evenodd" d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z" clip-rule="evenodd" />
+        </svg>
+
+    </div>
+
+</a>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const home = document.getElementById('home');
+    const anunciar = document.getElementById('anunciar');
+    const transacoes= document.getElementById('transacoes');
+    const perfil = document.getElementById('perfil');
+
+    home.classList.remove('text-blue-500');
+    anunciar.classList.remove('text-blue-500');
+    perfil.classList.remove('text-blue-500');
+
+
+    transacoes.classList.add('text-blue-500');
+
+});
+
+</script>
+{% endblock %}

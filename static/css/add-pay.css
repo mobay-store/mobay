@@ -1,0 +1,134 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:#f6f6f6;padding-bottom:80px}
+
+    .container{
+      max-width:600px;
+      margin:auto;
+      background:#fff;
+      min-height:100vh;
+    }
+
+    .header{
+      padding:16px;
+      font-size:18px;
+      font-weight:bold;
+      border-bottom:1px solid #eee;
+    }
+
+    .form{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .field label{
+      font-size:13px;
+      color:#444;
+      display:block;
+      margin-bottom:6px;
+    }
+
+    select, input{
+      width:100%;
+      padding:12px;
+      border:1px solid #ddd;
+      border-radius:8px;
+      font-size:14px;
+      outline:none;
+      background:#fff;
+    }
+
+    select:focus, input:focus{
+      border-color:#1a8f3a;
+      box-shadow:0 0 0 2px rgba(26,143,58,0.1);
+    }
+
+    /* PIN */
+    .pin{
+      text-align:center;
+      letter-spacing:4px;
+      font-size:18px;
+    }
+
+    /* INFO BOX */
+    .info{
+      background:#f9f9f9;
+      border:1px solid #eee;
+      padding:10px;
+      border-radius:8px;
+      font-size:12px;
+      color:#666;
+    }
+
+    /* BUTTON */
+    .btn{
+      margin:20px 16px;
+      width:calc(100% - 32px);
+      padding:14px;
+      border:none;
+      border-radius:8px;
+      background:#1a8f3a;
+      color:#fff;
+      font-size:15px;
+      cursor:pointer;
+    }
+
+    .btn:active{
+      transform:scale(0.98);
+    }
+
+    /* NAV */
+    .bottom-nav{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      height:60px;
+      background:#fff;
+      border-top:1px solid #ddd;
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+    }
+
+    .nav-item{
+      font-size:12px;
+      text-align:center;
+      color:#555;
+    }
+
+    .nav-item span{
+      display:block;
+      font-size:18px;
+    }
+
+
+                  /* FLOATING */
+    .floating{
+      position:fixed;
+      right:15px;
+      bottom:100px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    @media (min-width: 768px) {
+        .container {
+        width: 70%;
+          
+        }
+         .floating { right:190px;}
+
+    .fab{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      border:none;
+      color:#fff;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .share{background:#ff9800}
