@@ -40,6 +40,7 @@ def upload_image(file):
         public_id=filename.rsplit(".", 1)[0],  # sem extensão
         folder="products"
     )
+    print(result)
 
     return result["secure_url"]
 
