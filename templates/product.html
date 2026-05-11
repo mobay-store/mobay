@@ -16,7 +16,7 @@
             
             <img
             id="mainImage"
-            src="/{{product.images[0].url}}"
+            src="{{product.images[0].url}}"
             class="w-full h-full object-cover"
             >
             {% else %}
@@ -35,7 +35,7 @@
             {% for img in product.images %}
 
             <img
-            src="/{{ img.url }}"
+            src="{{ img.url }}"
             onclick="changeImage(this)"
             class="thumb w-24 h-24 rounded-2xl object-cover border-2 {% if loop.first %}border-blue-500{% else %}border-slate-200{% endif %} shrink-0 cursor-pointer transition"
             >
