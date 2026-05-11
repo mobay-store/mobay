@@ -13,7 +13,7 @@
         <div class="w-full h-[320px] md:h-[500px] overflow-hidden bg-white">
 
             {% if product.images %}
-            {% set img = t.product.images | selectattr('url') | list | first %}
+            {% set img = product.images | selectattr('url') | list | first %}
             <img
             id="mainImage"
             src="{% if img %}/{{ img.url }}{% else %}{{ url_for('static', filename='img/default.jpg') }}{% endif %}"
