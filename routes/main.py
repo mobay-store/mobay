@@ -97,7 +97,7 @@ def listar_produtos():
             "descricao": p.descricao,
             "categoria": p.categoria,
             "provincia": p.provincia,
-            "imagem": f"{base_url}/{p.images[0].url}" if p.images else None,
+            "imagem": f"{p.images[0].url}" if p.images else None,
             "vendedor": p.owner.nome if p.owner else None,
             "data_criacao": p.criado_em.strftime("%d/%m/%Y") if p.criado_em else None,
         }
