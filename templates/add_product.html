@@ -200,7 +200,9 @@
     </form>
 
 </div>
-
+<div id="image-error" class="hidden text-red-600 font-medium text-sm bg-red-50 p-3 rounded-xl border border-red-200">
+    ⚠️ Adiciona pelo menos uma imagem para continuar.
+</div>
 <!-- FLOATING -->
 <a
 href="/mensagens"
@@ -240,28 +242,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // IMAGE PREVIEW
-    const inputs = document.querySelectorAll('.image-box input');
+    document.querySelector("form").addEventListener("submit", function (e) {
 
-    inputs.forEach((input) => {
+    const inputs = document.querySelectorAll("input[name='images']");
+    const errorBox = document.getElementById("image-error");
 
-        input.addEventListener('change', function () {
+    let hasImage = false;
 
-            const file = this.files[0];
-
-            if (!file) return;
-
-            const box = this.parentElement;
-            const img = box.querySelector('img');
-            const placeholder = box.querySelector('.placeholder');
-
-            img.src = URL.createObjectURL(file);
-
-            img.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-
-        });
-
+    inputs.forEach(input => {
+        if (input.files.length > 0) {
+            hasImage = true;
+        }
     });
+
+    if (!hasImage) {
+        e.preventDefault();
+        errorBox.classList.remove("hidden");
+
+        // opcional: scroll suave para o erro
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        return;
+    }
+
+    errorBox.classList.add("hidden");
+});
 
 });
 
