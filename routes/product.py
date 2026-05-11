@@ -85,6 +85,14 @@ def stock():
     products = Product.query.filter_by(user_id=session.get("user_id")).all()
     return render_template("stock.html", products=products)
 
+
+@product_bp.route("/loja/<user_id>")
+def loja(user_id):
+
+    products = Product.query.filter_by(user_id=user_id).all()
+    return render_template("my_store.html", products=products)
+
+
 @product_bp.route("/del-prod", methods=["POST", "GET"])
 def del_prod():
     user_id = session.get("user_id")
