@@ -1,6 +1,7 @@
 from flask import Flask
 from models import db
 from routes import register_blueprints   # 👈 novo
+import os
 
 def create_app():
     app = Flask(__name__)
