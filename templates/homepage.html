@@ -163,7 +163,7 @@ async function loadProducts(){
 
             card.innerHTML = `
                 <div class="h-[70%] overflow-hidden">
-                    <img src="${p.imagem}" class="w-full h-full object-cover">
+                    <img src="${p.imagem.replace("https://mobay.online/", "")}" class="w-full h-full object-cover">
                 </div>
 
                 <div class="p-2 flex flex-col">
