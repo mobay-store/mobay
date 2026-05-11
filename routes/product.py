@@ -20,6 +20,8 @@ cloudinary.config(
 
 
 def upload_image(file):
+
+    print"Aquiiiiiiiiiiiiiiiiii"
     filename = secure_filename(file.filename)
 
     img = Image.open(file)
@@ -40,7 +42,7 @@ def upload_image(file):
         folder="products"
     )
 
-    print(result)
+    print("De novooooooooooooooooooooo", result)
 
     return result["secure_url"]
 
@@ -102,8 +104,8 @@ def add_product():
                 ))
 
             except Exception as e:
-                print("Erro na imagem:", e)
-                continue
+                return f"Erro na imagem:, {e}"
+                
 
         db.session.commit()
 
