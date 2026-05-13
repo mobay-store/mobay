@@ -251,7 +251,7 @@
 
                 <!-- CONFIRMAR -->
                 <button
-                onclick="openConfirmModal({{p.id}})"
+                onclick="openConfirmModal({{t.product.id}})"
                 class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-xl p-3 font-semibold transition duration-200"
                 >
                     Confirmar recepção
@@ -270,7 +270,7 @@
 
 <!-- MODAL -->
 <form
-id="confirmModal-{{p.id}}"
+id="confirmModal-{{t.product.id}}"
 method="post"
 
 class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center p-4"
