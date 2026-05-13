@@ -10,7 +10,7 @@ def login_number():
         if session.get("logged"):
             return redirect("/")
         telefone = request.form["telefone"]
-        session["user_id"] = telefone
+        session["temp"] = telefone
 
         if check_user(telefone):
             return render_template("pass_form.html", hello="Já tens conta 🥹", telefone=telefone)
@@ -31,6 +31,7 @@ def login_name():
             )
 
             session["user_id"] = user.id
+            session["logged"] = telefone
         except Exception as e:
             flash(e)
             return redirect("/login/name")
@@ -43,11 +44,12 @@ def login_name():
 @auth_bp.route("/pass", methods=["GET", "POST"])
 def login_pass():
     if request.method == "POST":
-        auth = check_auth(session.get("user_id"), request.form["pin"])
+        auth = check_auth(session.get("temp"), request.form["pin"])
         if auth:
 
             session["user_id"] = auth.id
-            session["logged"] = auth.id
+            session["logged"] = auth.telefone
+            session["temp"] = ""
             session["workwith"] = ""
             return redirect(session.get("current", "/"))
         else:
