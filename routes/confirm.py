@@ -7,6 +7,7 @@ confirm_bp = Blueprint("confirm", __name__)
 @confirm_bp.route("/confirm/<int:product_id>")
 def confirm(product_id):
 
+    
     product = Product.query.filter_by(id=product_id).first()
 
 
@@ -17,6 +18,10 @@ def confirm(product_id):
 @confirm_bp.route("/confirm/submit", methods=["POST", "GET"])
 def confirm_submit():
 
+    
+    if not session.get("logged"):
+        return redirect("/login")    
+    
     if request.method == "POST":
 
         destino = request.form.get("destino")
