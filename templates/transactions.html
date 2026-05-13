@@ -212,7 +212,7 @@
 
     </div>
 
-    <div class="flex flex-col gap-5">
+    <div  class="flex flex-col gap-5">
 
         <!-- PENDENTE DE ENTRADA -->
         {% for t in transactions %}
@@ -251,6 +251,7 @@
 
                 <!-- CONFIRMAR -->
                 <button
+                onclick="openConfirmModal({{p.id}})"
                 class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-xl p-3 font-semibold transition duration-200"
                 >
                     Confirmar recepção
@@ -266,6 +267,96 @@
             </div>
 
         </div>
+
+<!-- MODAL -->
+<form
+id="confirmModal-{{p.id}}"
+method="post"
+
+class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center p-4"
+>
+
+    <!-- BOX -->
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 flex flex-col gap-5 animate-fadeIn">
+
+        <!-- ICON -->
+        <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8 h-8 text-red-600"
+            >
+                <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673A2.25 2.25 0 0 1 15.916 21H8.084a2.25 2.25 0 0 1-2.245-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0V4.5c0-.621-.504-1.125-1.125-1.125h-3.75C10.254 3.375 9.75 3.879 9.75 4.5v1.29"
+                />
+            </svg>
+
+        </div>
+
+        <!-- TEXTO -->
+        <div class="text-center">
+
+            <h2 class="text-2xl font-bold text-slate-900">
+                Confirmar que recebeu
+            </h2>
+
+            <p class="text-slate-500 mt-2">
+                Insira o seu PIN de acesso para confirmar a recepção do producto.
+            </p>
+
+        </div>
+
+        <!-- INPUT -->
+        <div class="flex flex-col gap-2">
+
+
+            <label class="text-slate-700 font-semibold">
+                PIN de acesso
+            </label>
+
+            <input
+            name="pin"
+            type="password"
+            maxlength="6"
+            placeholder="••••••"
+            class="border border-slate-200 rounded-2xl p-4 text-center text-2xl tracking-[10px] outline-none focus:ring-2 focus:ring-red-500"
+            >
+
+        </div>
+
+        <!-- BOTÕES -->
+        <div class="flex gap-3">
+
+            <!-- CANCELAR -->
+            <button
+            type="button"
+            onclick="closeDeleteModal()"
+            class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl p-4 font-semibold transition duration-200"
+            >
+                Cancelar
+            </button>
+
+            <!-- CONFIRMAR -->
+            <button
+            type="submit"
+            class="flex-1 bg-green-500 hover:bg-red-600 text-white rounded-2xl p-4 font-semibold transition duration-200"
+            >
+                Confirmar
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
+
+        
         {% endif %}
         {% endfor %}
 
@@ -353,110 +444,25 @@ class="fixed bottom-24 right-5 z-50 group"
 
 
 
-<!-- MODAL -->
-<div
-id="deleteModal"
-class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center p-4"
->
 
-    <!-- BOX -->
-    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 flex flex-col gap-5 animate-fadeIn">
-
-        <!-- ICON -->
-        <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-8 h-8 text-red-600"
-            >
-                <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673A2.25 2.25 0 0 1 15.916 21H8.084a2.25 2.25 0 0 1-2.245-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0V4.5c0-.621-.504-1.125-1.125-1.125h-3.75C10.254 3.375 9.75 3.879 9.75 4.5v1.29"
-                />
-            </svg>
-
-        </div>
-
-        <!-- TEXTO -->
-        <div class="text-center">
-
-            <h2 class="text-2xl font-bold text-slate-900">
-                Confirmar que recebeu
-            </h2>
-
-            <p class="text-slate-500 mt-2">
-                Insira o seu PIN de acesso para confirmar a recepção do producto.
-            </p>
-
-        </div>
-
-        <!-- INPUT -->
-        <div class="flex flex-col gap-2">
-
-
-            <label class="text-slate-700 font-semibold">
-                PIN de acesso
-            </label>
-
-            <input
-            name="pin"
-            type="password"
-            maxlength="6"
-            placeholder="••••••"
-            class="border border-slate-200 rounded-2xl p-4 text-center text-2xl tracking-[10px] outline-none focus:ring-2 focus:ring-red-500"
-            >
-
-        </div>
-
-        <!-- BOTÕES -->
-        <div class="flex gap-3">
-
-            <!-- CANCELAR -->
-            <button
-            type="button"
-            onclick="closeDeleteModal()"
-            class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl p-4 font-semibold transition duration-200"
-            >
-                Cancelar
-            </button>
-
-            <!-- CONFIRMAR -->
-            <button
-            type="submit"
-            class="flex-1 bg-green-500 hover:bg-red-600 text-white rounded-2xl p-4 font-semibold transition duration-200"
-            >
-                Confirmar
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-</form>
 
 
 
 <!-- SCRIPT -->
 <script>
 
-    function openDeleteModal() {
+    function openConfirmModal(id) {
 
-        const modal = document.getElementById('deleteModal');
+        const modal = document.getElementById('confirmModal-'+id);
 
         modal.classList.remove('hidden');
         modal.classList.add('flex');
 
     }
 
-    function closeDeleteModal() {
+    function closeConfirmModal(id) {
 
-        const modal = document.getElementById('deleteModal');
+        const modal = document.getElementById('confirmModal-'+id);
 
         modal.classList.remove('flex');
         modal.classList.add('hidden');
