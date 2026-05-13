@@ -9,7 +9,7 @@ def profile():
     session["current"] = "/profile"
 
     if session.get("logged"):
-        user = get_user(session["user_id"])
+        user = get_user(session["logged"])
         return render_template("profile.html", user=user)
 
     return redirect("/login")
