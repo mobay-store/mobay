@@ -118,6 +118,9 @@ def add_product():
 @product_bp.route("/stock")
 def stock():
 
+
+    if not session.get("logged"):
+        return redirect("/login")    
     products = Product.query.filter_by(user_id=session.get("user_id")).all()
     return render_template("stock.html", products=products)
 
