@@ -83,7 +83,7 @@ def confirm_recepcao():
 
         user = User.query.get_or_404(session.get("user_id"))
         pin = request.form.get("pin")
-        product_id = request.form.get("product_id")
+        product_id = int(request.form.get("product_id"))
         if pin != user.pin:
             flash("PIN Incorreto")
             return redirect("/trasanctions")
