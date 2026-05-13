@@ -21,7 +21,7 @@ def create_app():
     
     LOG_FILE = 'access_logs.csv'
 
-    @app.before_app_request
+    @app.before_request
     def log_to_csv():
         # Ignora arquivos estáticos e a própria rota do dashboard
         if request.endpoint and 'static' not in request.endpoint and 'show_stats' not in request.endpoint:
@@ -36,8 +36,10 @@ def create_app():
             except:
                 pass
 
-    @app.route('/meu-dashboard-secreto')
-    def show_stats():
+    @app.route('/dashboard/<password>')
+    def show_stats(password):
+        if password != "396652":
+            return "Nice try"
         stats = Counter()
         try:
             with open(LOG_FILE, mode='r', encoding='utf-8') as f:
