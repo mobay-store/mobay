@@ -86,7 +86,7 @@ def confirm_recepcao():
         product_id = int(request.form.get("product_id"))
         if pin != user.pin:
             flash("PIN Incorreto")
-            return redirect("/trasanctions")
+            return redirect("/transactions")
         
         product = Product.query.filter_by(id=product_id).first()
         transaction = Transaction.query.filter_by(product_id=product_id).first()
