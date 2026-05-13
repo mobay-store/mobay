@@ -91,6 +91,8 @@ def confirm_recepcao():
         product = Product.query.filter_by(id=product_id).first()
         transaction = Transaction.query.filter_by(product_id=product_id).first()
 
+        if transaction.status == "confirmada":
+            return "Confirmada"
         product.status = "inativo"
         transaction.status = "confirmada"
 
