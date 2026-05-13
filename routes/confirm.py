@@ -70,3 +70,35 @@ def confirm_submit():
     return redirect("/transactions")
 
 
+
+
+@confirm_bp.route("/confirm/recebido", methods=["POST", "GET"])
+def confirm_recepcao():
+
+    
+    if not session.get("logged"):
+        return redirect("/login")    
+    
+    if request.method == "POST":
+
+        user = User.query.get_or_404(session.get("user_id"))
+        pin = request.form.get("pin")
+        product_id = request.form.get("product_id")
+        if pin != user.pin:
+            flash("PIN Incorreto")
+            return redirect("/trasanctions")
+        
+        product = Product.query.filter_by(id=product_id).first()
+        transaction = Transaction.query.filter_by(product_id=product_id).first()
+
+        product.status = "inativo"
+        transaction.status = "confirmada"
+
+
+        db.session.commit()
+        
+        return redirect("/transactions")
+
+    flash("Erro desconhecido")
+    return redirect("/transactions")
+        
