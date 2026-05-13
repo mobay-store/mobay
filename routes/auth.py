@@ -7,10 +7,10 @@ auth_bp = Blueprint("auth", __name__)
 def login_number():
     if request.method == "POST":
 
-        if session.get("user_id"):
+        if session.get("logged"):
             return redirect("/")
         telefone = request.form["telefone"]
-        session["logged"] = telefone
+        session["user_id"] = telefone
 
         if check_user(telefone):
             return render_template("pass_form.html", hello="Já tens conta 🥹", telefone=telefone)
@@ -43,10 +43,11 @@ def login_name():
 @auth_bp.route("/pass", methods=["GET", "POST"])
 def login_pass():
     if request.method == "POST":
-        auth = check_auth(session.get("logged"), request.form["pin"])
+        auth = check_auth(session.get("user_id"), request.form["pin"])
         if auth:
 
             session["user_id"] = auth.id
+            session["logged"] = auth.id
             session["workwith"] = ""
             return redirect(session.get("current", "/"))
         else:
