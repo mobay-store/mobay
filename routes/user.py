@@ -9,7 +9,7 @@ def profile():
     session["current"] = "/profile"
 
     if session.get("logged"):
-        user = get_user(session["logged"])
+        user = get_user(session["user_id"])
         return render_template("profile.html", user=user)
 
     return redirect("/login")
@@ -22,8 +22,8 @@ def seller():
 @user_bp.route("/payments")
 def payments():
 
-    user_id = session.get("logged")
-    if not user_id:
+    user_id = session.get("user_id")
+    if not session.get("logged"):
         return redirect("/login")
     carteira = Carteira.query.filter_by(user_id=user_id).first()
     return render_template("payments.html", carteira=carteira)
@@ -33,8 +33,8 @@ def payments():
 @user_bp.route("/remover-pay")
 def rem_pay():
 
-    user_id = session.get("logged")
-    if not user_id:
+    user_id = session.get("user_id")
+    if not session.get("logged"):
         return redirect("/login")
 
     carteira = Carteira.query.filter_by(user_id=user_id).first()
@@ -48,8 +48,8 @@ def rem_pay():
 def add_pay():
 
     erro = ""
-    user_id = session.get("logged")
-    if not user_id:
+    user_id = session.get("user_id")
+    if not session.get("logged"):
         return redirect("/login")
     
     if request.method == "POST":
