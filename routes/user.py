@@ -22,7 +22,7 @@ def seller():
 @user_bp.route("/payments")
 def payments():
 
-    user_id = session.get("user_id")
+    user_id = session.get("logged")
     if not user_id:
         return redirect("/login")
     carteira = Carteira.query.filter_by(user_id=user_id).first()
@@ -33,7 +33,7 @@ def payments():
 @user_bp.route("/remover-pay")
 def rem_pay():
 
-    user_id = session.get("user_id")
+    user_id = session.get("logged")
     if not user_id:
         return redirect("/login")
 
@@ -48,7 +48,9 @@ def rem_pay():
 def add_pay():
 
     erro = ""
-    user_id = session.get("user_id")
+    user_id = session.get("logged")
+    if not user_id:
+        return redirect("/login")
     
     if request.method == "POST":
         operadora = request.form.get("operadora")
