@@ -112,7 +112,13 @@
     {%endif%}
 
 </div>
-
+<h2 class="text-md flex justify-center">
+        {% with error = get_flashed_messages() %}
+        {% if error %}
+            <p class="text-red-400 flex justify-center">{{error[0]}}</p>
+        {%endif%}
+        {%endwith%}
+</h2>
 <!-- MODAL -->
 <div
 id="modal"
