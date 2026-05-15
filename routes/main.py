@@ -55,7 +55,7 @@ def listar_produtos():
     # 🚫 EXCLUIR VENDIDOS
     query = query.filter(
         ~Product.transactions.any(
-            Transaction.status.ilike("confirmado")
+            Transaction.status.ilike("inactivo")
         )
     )
 
