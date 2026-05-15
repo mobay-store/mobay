@@ -121,14 +121,14 @@ def stock():
 
     if not session.get("logged"):
         return redirect("/login")    
-    products = Product.query.filter_by(user_id=session.get("user_id")).all()
+    products = Product.query.filter_by(user_id=session.get("user_id"), status="ativo").all()
     return render_template("stock.html", products=products)
 
 
 @product_bp.route("/loja/<user_id>")
 def loja(user_id):
 
-    products = Product.query.filter_by(user_id=user_id).all()
+    products = Product.query.filter_by(user_id=user_id, status="ativo").all()
     user = User.query.get_or_404(user_id)
     owner = user.nome
     return render_template("my_store.html", products=products, owner=owner)
