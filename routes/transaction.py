@@ -28,7 +28,7 @@ def confirm_receipt():
     transaction_id = request.form.get("transaction_id")
     pin = request.form.get("pin")
 
-    user = User.query.get_or_404(session.get("user_id")).first()
+    user = User.query.get_or_404(session.get("user_id"))
     if user.id != pin:
         flash("PIN incorrecto")
         return redirect("/transactions")
