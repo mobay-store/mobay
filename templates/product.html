@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}{{ product.titulo }}{% endblock %}
-
+{% block og_image %}{{product.images[0].url}}{% endblock %}
 {% block content %}
 
 <div class="min-h-screen bg-slate-50 pb-32">
