@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, session, redirect
-from models import Transaction, Product, db
+from flask import Blueprint, render_template, session, redirect, flash
+from models import Transaction, Product, db, User
 from sqlalchemy import or_
 
 transaction_bp = Blueprint("transaction", __name__)
@@ -19,14 +19,24 @@ def transactions():
     return render_template("transactions.html", transactions = transactions)
 
 
-@transaction_bp.route("/confirm_receipt/<int:id>")
-def confirm_receipt(id):
+@transaction_bp.route("/confirm_receipt", methods = ["POST","GET"])
+def confirm_receipt():
 
     if not session.get("logged"):
         return redirect("/login")
-    
-    transaction = Transaction.query.filter_by(id=int(id)).first()
+    product_id = request.form.get("product_id")
+    transaction_id = request.form.get("transaction_id")
+    pin = request.form.get("pin")
+
+    user = User.query.get_or_404(session.get("user_id")).first()
+    if user.id != pin:
+        flash("PIN incorrecto")
+        return redirect("/transactions")
+        
+    transaction = Transaction.query.filter_by(id=int(transaction_id)).first()
+    product = Product.query.filter_by(id=int(product_id)).first()
     transaction.status = "confirmada"
+    product.status = "inactivo"
     db.session.commit()
 
     return redirect("/transactions")
