@@ -7,8 +7,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>{%block title%}{%endblock%}</title>
 
+
+    <title>{% block title %}mobay{% endblock %}</title>
+
+    <meta name="description" content="{% block description %}Descrição padrão do site{% endblock %}">
+
+    <!-- Open Graph (Facebook, WhatsApp, etc.) -->
+    <meta property="og:title" content="{% block og_title %}mobay{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Venda e compre agora com mais segurança.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://mobay.online/static/img/default.jpg{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}https://mobay.online{% endblock %}">
+    <meta property="og:type" content="website">
+
+    
+    
 
     <style>
         body{
