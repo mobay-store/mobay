@@ -53,11 +53,7 @@ def listar_produtos():
         query = query.filter(Product.categoria == category)
 
     # 🚫 EXCLUIR VENDIDOS
-    query = query.filter(
-        ~Product.transactions.any(
-            Transaction.status.ilike("inactivo")
-        )
-    )
+    query = query.filter(Product.status == "ativo")
 
     # 📅 / 💰 ORDENAÇÃO
     if sort == "price_asc":
