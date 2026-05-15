@@ -68,7 +68,7 @@ def add_pay():
             return redirect("/payments")
         else:
             flash("PIN incorreto", "erro")
-            return redirect("/add-pay")
+            return redirect("/payments")
 
 
 
