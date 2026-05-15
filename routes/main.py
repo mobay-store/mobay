@@ -6,16 +6,13 @@ main_bp = Blueprint("main", __name__)
 @main_bp.route("/")
 def homepage():
 
+    products = Product.query.filter_by(status="ativo").all()
 
-    products = Product.query.all()
-
-    filtered_products = [
-        p for p in products
-        if not p.transactions
-        or all((t.status or "").lower() == "falhada" for t in p.transactions)
-    ]
-
-    return render_template("homepage.html", logged=session.get("logged"), products=filtered_products)
+    return render_template(
+        "homepage.html",
+        logged=session.get("logged"),
+        products=products
+    )
 
 
 
