@@ -38,7 +38,7 @@ def confirm_receipt():
     product = Product.query.filter_by(id=int(product_id)).first()
     transaction.status = "confirmada"
     product.status = "inactivo"
-    notify(f"Acao: Confirmacao de recebimento\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.nome}\nPreco: {product.preco}")
+    notify(f"Acao: Confirmacao de recebimento\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.titulo}\nPreco: {product.preco}")
     db.session.commit()
 
     return redirect("/transactions")
