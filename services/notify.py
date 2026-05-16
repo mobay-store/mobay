@@ -1,20 +1,15 @@
-from flask_mail import Message
-from flask import current_app
+import requests
+import os
 
 def notify(message):
+
+    url = os.getenv("EMAIL_SERVICE_URL")  # URL do teu servidor
+
     try:
-        mail = current_app.extensions["mail"]
-
-        msg = Message(
-            subject="moBay notification",
-            recipients=[current_app.config["MAIL_USERNAME"]]
+        requests.post(
+            f"{url}/send-email",
+            json={"message": message},
+            timeout=5
         )
-
-        msg.body = message
-
-        mail.send(msg)
-
-        print("EMAIL ENVIADO")
-
     except Exception as e:
-        print("ERRO EMAIL:", e)
+        print("Erro email service:", e)
