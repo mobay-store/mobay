@@ -4,4 +4,4 @@ psycopg2-binary
 sqlalchemy
 pillow
 cloudinary
-resend
+flask-mail
