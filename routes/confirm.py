@@ -18,17 +18,14 @@ def confirm(product_id):
 @confirm_bp.route("/confirm/submit", methods=["POST", "GET"])
 def confirm_submit():
 
-    
     if not session.get("logged"):
-        return redirect("/login")    
-    
+        return redirect("/login")
+
     if request.method == "POST":
 
         destino = request.form.get("destino")
 
         pin = request.form.get("pin")
-        destino = request.form.get("destino")
-
 
         product_id = int(request.form.get("product_id"))
 
@@ -39,34 +36,67 @@ def confirm_submit():
         user = User.query.get_or_404(buyer_id)
 
         if pin != user.pin:
+
             flash("PIN incorreto")
+
             return redirect(f"/confirm/{product_id}")
 
         if product.user_id == buyer_id:
+
             return "Erro fatal"
 
         seller_id = product.user_id
 
-
-        transaction = Transaction.query.filter_by(product_id=product_id, buyer_id
-        =buyer_id).first()
+        transaction = Transaction.query.filter_by(
+            product_id=product_id,
+            buyer_id=buyer_id
+        ).first()
 
         if transaction:
+
             flash("Transacao ja existente")
+
             return redirect("/transactions")
 
-
-
-
         transaction = Transaction(
-            product_id = product_id,
-            buyer_id = buyer_id,
-            seller_id = seller_id,
-            destino = destino,
+            product_id=product_id,
+            buyer_id=buyer_id,
+            seller_id=seller_id,
+            destino=destino,
         )
 
         db.session.add(transaction)
+
         db.session.commit()
+
+        # -------------------------
+        # EMAIL
+        # -------------------------
+
+        current_app.send_email(
+
+            "Nova transação criada",
+
+            f"""
+Nova transação criada.
+
+Produto:
+{product.title}
+
+Produto ID:
+{product.id}
+
+Comprador:
+{user.username}
+
+Comprador ID:
+{user.id}
+
+Destino:
+{destino}
+"""
+        )
+
     return redirect("/transactions")
 
 
