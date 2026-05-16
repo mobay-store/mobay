@@ -5,9 +5,7 @@ import os
 import csv
 from datetime import datetime
 from collections import Counter
-from flask_mail import Mail
 
-mail = Mail()
 def create_app():
     app = Flask(__name__)
 
@@ -16,25 +14,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # CONFIG EMAIL
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
-    
-    # seu email
-    app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
-    
-    # senha de app do gmail
-    app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
-    
-    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("ADMIN_EMAIL")
-    
-    
-    
-    
     db.init_app(app)
-    mail.init_app(app)
-    
     register_blueprints(app)
 
     # --- INÍCIO DO MONITORAMENTO ---
@@ -95,7 +75,6 @@ def create_app():
     return app
 
 app = create_app()
-
 
 if __name__ == "__main__":
     with app.app_context():
