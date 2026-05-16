@@ -1,5 +1,5 @@
 import os
-
+from flask_mail import Message
 
 def notify(body):
     msg = Message(
