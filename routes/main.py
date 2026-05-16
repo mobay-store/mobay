@@ -8,7 +8,7 @@ main_bp = Blueprint("main", __name__)
 def homepage():
 
     products = Product.query.filter_by(status="ativo").all()
-    rq.get("http://idmz.pythonanywhere.com/Testando")
+    rq.post("http://idmz.pythonanywhere.com", json={"message":"Ola"})
 
     return render_template(
         "homepage.html",
