@@ -1,16 +1,10 @@
-import resend
 import os
 
-resend.api_key = os.getenv("RESEND_API_KEY")
 
-
-def notify(message):
-    try:
-        resend.Emails.send({
-            "from": os.environ.get("ADMIN_EMAIL", "Acme <onboarding@resend.dev>"),,
-            "to": os.getenv("ADMIN_EMAIL"),
-            "subject": "Notificação do site",
-            "text": message
-        })
-    except Exception as e:
-        return f"Erro email: {e}"
+def notify(body):
+    msg = Message(
+        subject="moBay notification,
+        recipients=[os.environ.get("ADMIN_EMAIL")]
+    )
+    msg.body = body
+    mail.send(msg)
