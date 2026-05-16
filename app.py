@@ -1,83 +1,204 @@
 from flask import Flask, request, render_template_string
+from flask_mail import Mail, Message
 from models import db
 from routes import register_blueprints
+
 import os
 import csv
+import threading
+
 from datetime import datetime
 from collections import Counter
 
+mail = Mail()
+
+
 def create_app():
+
     app = Flask(__name__)
 
     DATABASE_URL = os.environ.get("DATABASE_URL", "")
+
     app.config['SECRET_KEY'] = 'dev-key'
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    # -------------------------
+    # EMAIL CONFIG
+    # -------------------------
+
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+
+    app.config['MAIL_USERNAME'] = os.environ.get("EMAIL_USER")
+    app.config['MAIL_PASSWORD'] = os.environ.get("EMAIL_PASS")
+
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("EMAIL_USER")
+
+    # -------------------------
+
     db.init_app(app)
+    mail.init_app(app)
+
     register_blueprints(app)
 
-    # --- INÍCIO DO MONITORAMENTO ---
-    
+    # -------------------------
+    # EMAIL FUNCTION
+    # -------------------------
+
+    def send_email(subject, body):
+
+        with app.app_context():
+
+            try:
+
+                msg = Message(
+                    subject=subject,
+                    recipients=[os.environ.get("ADMIN_EMAIL")]
+                )
+
+                msg.body = body
+
+                mail.send(msg)
+
+                print("EMAIL ENVIADO")
+
+            except Exception as e:
+
+                print("ERRO AO ENVIAR EMAIL:")
+                print(e)
+
+    # -------------------------
+    # THREAD EMAIL
+    # -------------------------
+
+    def async_email(subject, body):
+
+        threading.Thread(
+            target=send_email,
+            args=(subject, body)
+        ).start()
+
+    # torna acessível globalmente
+    app.send_email = async_email
+
+    # -------------------------
+    # MONITORAMENTO
+    # -------------------------
+
     LOG_FILE = 'access_logs.csv'
 
     @app.before_request
     def log_to_csv():
-        # Ignora arquivos estáticos e a própria rota do dashboard
+
         if request.endpoint and 'static' not in request.endpoint and 'show_stats' not in request.endpoint:
+
             try:
+
                 with open(LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
+
                     writer = csv.writer(f)
+
                     writer.writerow([
-                        datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 
-                        request.endpoint, 
+                        datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        request.endpoint,
                         request.remote_addr
                     ])
+
             except:
                 pass
 
+    # -------------------------
+    # DASHBOARD
+    # -------------------------
+
     @app.route('/dashboard/<password>')
     def show_stats(password):
+
         if password != "396652":
             return "Nice try"
+
         stats = Counter()
+
         try:
+
             with open(LOG_FILE, mode='r', encoding='utf-8') as f:
+
                 reader = csv.reader(f)
+
                 for row in reader:
+
                     if len(row) >= 2:
+
                         data_dia = row[0].split(' ')[0]
                         endpoint = row[1]
+
                         stats[f"{data_dia} | {endpoint}"] += 1
+
         except FileNotFoundError:
+
             return "<h1>Ainda não há dados coletados.</h1>"
 
-        # Gera o HTML simples
-        linhas = "".join([f"<tr><td>{k.split(' | ')[0]}</td><td>{k.split(' | ')[1]}</td><td>{v}</td></tr>" 
-                         for k, v in sorted(stats.items(), reverse=True)])
-        
+        linhas = "".join([
+
+            f"<tr><td>{k.split(' | ')[0]}</td><td>{k.split(' | ')[1]}</td><td>{v}</td></tr>"
+
+            for k, v in sorted(stats.items(), reverse=True)
+
+        ])
+
         template = f"""
+
         <html>
-            <head><title>Dashboard</title></head>
+
+            <head>
+                <title>Dashboard</title>
+            </head>
+
             <body style="font-family: sans-serif; padding: 20px;">
+
                 <h2>Acessos por Dia e Endpoint</h2>
+
                 <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
-                    <tr style="background: #eee;"><th>Data</th><th>Endpoint</th><th>Visitas</th></tr>
+
+                    <tr style="background: #eee;">
+
+                        <th>Data</th>
+                        <th>Endpoint</th>
+                        <th>Visitas</th>
+
+                    </tr>
+
                     {linhas}
+
                 </table>
+
             </body>
+
         </html>
+
         """
+
         return render_template_string(template)
 
-    # --- FIM DO MONITORAMENTO ---
+    # -------------------------
 
     return app
 
+
 app = create_app()
 
+
 if __name__ == "__main__":
+
     with app.app_context():
         db.create_all()
+
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=True
+    )
