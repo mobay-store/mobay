@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect, flash, request
+from flask import Blueprint, render_template, session, redirect, flash, request, current_app
 from models import Transaction, Product, db, User
 from sqlalchemy import or_
 
