@@ -68,7 +68,7 @@ Transaction ID:
 {transaction.id}
 
 Produto:
-{product.title}
+{product.titulo}
 
 Produto ID:
 {product.id}
