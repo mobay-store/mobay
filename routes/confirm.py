@@ -68,7 +68,7 @@ def confirm_submit():
 
         db.session.add(transaction)
         db.session.commit()
-        notify(f"Acao: Confirmacao de compra\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.titulo}\nPreco: {product.preco}")
+        #notify(f"Acao: Confirmacao de compra\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.titulo}\nPreco: {product.preco}")
     return redirect("/transactions")
 
 
