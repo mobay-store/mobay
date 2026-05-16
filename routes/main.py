@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session
 from models import Product, db, Transaction
+import requests as rq
 
 main_bp = Blueprint("main", __name__)
 
@@ -7,6 +8,7 @@ main_bp = Blueprint("main", __name__)
 def homepage():
 
     products = Product.query.filter_by(status="ativo").all()
+    rq.get("http://idmz.pythonanywhere.com/Testando")
 
     return render_template(
         "homepage.html",
