@@ -1,6 +1,6 @@
 from models import Product, db, Transaction, User
 
-from flask import Blueprint, render_template, session, redirect, request, flash
+from flask import Blueprint, render_template, session, redirect, request, flash, current_app
 
 confirm_bp = Blueprint("confirm", __name__)
 
@@ -81,13 +81,13 @@ def confirm_submit():
 Nova transação criada.
 
 Produto:
-{product.title}
+{product.titulo}
 
 Produto ID:
 {product.id}
 
 Comprador:
-{user.username}
+{user.nome}
 
 Comprador ID:
 {user.id}
