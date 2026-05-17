@@ -8,7 +8,7 @@ main_bp = Blueprint("main", __name__)
 def homepage():
 
     products = Product.query.filter_by(status="ativo").all()
-    #rq.post("https://idmz.pythonanywhere.com", json={"message":"Ola"})
+    rq.get("https://api.callmebot.com/facebook/send.php?apikey=vKkkSqQtWSvxeMPv&text=Ola+aqui+fala+mobay")
 
     return render_template(
         "homepage.html",
