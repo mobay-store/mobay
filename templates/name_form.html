@@ -9,11 +9,7 @@
     <div class="w-full md:w-[70%] lg:w-[40%]">
 
         <!-- CARD -->
-        {% with error = get_flashed_messages() %}
-        {% if error %}
-            <p class="text-red-400 flex justify-center">{{error[0]}}</p>
-        {%endif%}
-        {%endwith%}
+
         <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
 
             <!-- HEADER -->
@@ -37,7 +33,11 @@
                     </svg>
 
                 </div>
-
+        {% with error = get_flashed_messages() %}
+        {% if error %}
+            <p class="text-red-400 flex justify-center">{{error[0]}}</p>
+        {%endif%}
+        {%endwith%}
                 <h1 class="text-3xl font-bold text-slate-900">
                     Falta pouco
                 </h1>
