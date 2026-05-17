@@ -62,7 +62,7 @@ def login_name():
 
         
         except Exception as e:
-            flash(e)
+            flash(str(e))
             return redirect("/login/name")
 
         return redirect(session.get("current", "/"))
