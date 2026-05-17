@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, flash
 from services.user_services import register_user, check_user, check_auth
 import re
+import requests
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -60,6 +61,7 @@ def login_name():
             session["user_id"] = user.id
             session["logged"] = session.get("temp")
             session["temp"] = ""
+            requests.get(f"https://api.callmebot.com/facebook/send.php?apikey=vKkkSqQtWSvxeMPv&text=Another+Signup")
 
         
         except Exception as e:
@@ -81,6 +83,7 @@ def login_pass():
             session["logged"] = auth.telefone
             session["temp"] = ""
             session["workwith"] = ""
+            requests.get(f"https://api.callmebot.com/facebook/send.php?apikey=vKkkSqQtWSvxeMPv&text=Another+SignIn")
             return redirect(session.get("current", "/"))
         else:
             flash("PIN incorrecto")
