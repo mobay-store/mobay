@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre o moBay{% endblock %}
+
+{% block content %}
+
+<div class="min-h-screen bg-slate-50 pb-32">
+
+    <!-- CONTAINER -->
+    <div class="w-full md:w-[80%] lg:w-[60%] mx-auto p-4 flex flex-col gap-6">
+
+        <!-- HEADER -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex items-center justify-between">
+
+            <div>
+
+                <h1 class="text-3xl font-bold text-slate-900">
+                    O que é o moBay?
+                </h1>
+
+                <p class="text-slate-500 mt-2">
+                    Marketplace seguro baseado em escrow
+                </p>
+
+            </div>
+
+            <!-- ICON -->
+            <div class="w-16 h-16 rounded-3xl bg-blue-100 flex items-center justify-center">
+
+                <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke-width="1.5" 
+                stroke="currentColor" 
+                class="w-8 h-8 text-blue-600"
+                >
+                    <path 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                    />
+                </svg>
+
+            </div>
+
+        </div>
+
+        <!-- CARD -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col gap-6">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-10 h-10 rounded-2xl bg-blue-100 flex items-center justify-center">
+
+                    <span class="text-blue-600 font-bold">M</span>
+
+                </div>
+
+                <h2 class="text-xl font-bold text-slate-900">
+                    O que é o moBay?
+                </h2>
+
+            </div>
+
+            <p class="text-slate-600 leading-relaxed">
+                O <b>moBay</b> é um marketplace criado para tornar a compra e venda entre pessoas mais segura, simples e confiável.
+                Aqui, qualquer pessoa pode anunciar produtos, encontrar ofertas e negociar diretamente com outros utilizadores — como num marketplace comum.
+                Mas o moBay vai mais longe: ele foi desenhado para proteger tanto o comprador como o vendedor em todas as etapas da transação.
+            </p>
+
+        </div>
+
+        <!-- COMO FUNCIONA -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col gap-6">
+
+            <h2 class="text-xl font-bold text-slate-900">
+                Como funciona?
+            </h2>
+
+            <div class="flex flex-col gap-4 text-slate-600 leading-relaxed">
+
+                <p>
+                    O funcionamento do moBay é baseado num sistema de segurança chamado <b>escrow</b>.
+                </p>
+
+                <ol class="list-decimal pl-5 flex flex-col gap-2">
+
+                    <li>O comprador faz o pagamento, mas o dinheiro não vai diretamente para o vendedor.</li>
+                    <li>O valor fica guardado de forma segura no moBay.</li>
+                    <li>O vendedor envia o produto.</li>
+                    <li>O comprador confirma que recebeu tudo corretamente.</li>
+                    <li>Só depois disso o dinheiro é liberado para o vendedor.</li>
+
+                </ol>
+
+                <p class="bg-blue-50 border border-blue-100 p-4 rounded-2xl text-slate-700">
+                    Se algo correr mal, o dinheiro não é automaticamente liberado — ele fica protegido até que a situação seja resolvida.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- IMPORTÂNCIA -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col gap-4">
+
+            <h2 class="text-xl font-bold text-slate-900">
+                Por que isso é importante?
+            </h2>
+
+            <p class="text-slate-600 leading-relaxed">
+                Em muitos marketplaces, compradores e vendedores precisam confiar um no outro sem garantia real de segurança.
+                Isso pode levar a fraudes, perdas e desconfiança.
+            </p>
+
+            <p class="text-slate-600 leading-relaxed">
+                O moBay resolve esse problema ao agir como intermediário neutro.
+                Nós não compramos nem vendemos produtos — apenas garantimos que o dinheiro e o produto seguem o processo correto.
+            </p>
+
+        </div>
+
+        <!-- SEGURANÇA -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col gap-4">
+
+            <h2 class="text-xl font-bold text-slate-900">
+                Entregas e segurança
+            </h2>
+
+            <p class="text-slate-600 leading-relaxed">
+                Além do pagamento, o moBay também ajuda a organizar e acompanhar o processo de entrega.
+                Dependendo da região e do tipo de transação, podem existir opções de entrega verificadas ou métodos de confirmação que ajudam a garantir que o produto chegou corretamente ao comprador.
+            </p>
+
+        </div>
+
+        <!-- DIFERENCIAL -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col gap-4">
+
+            <h2 class="text-xl font-bold text-slate-900">
+                O que torna o moBay diferente?
+            </h2>
+
+            <ul class="list-disc pl-5 text-slate-600 flex flex-col gap-2">
+
+                <li>Segurança nas transações através de escrow</li>
+                <li>Proteção contra fraudes</li>
+                <li>Processo claro e transparente para ambas as partes</li>
+                <li>Intermediação neutra entre comprador e vendedor</li>
+                <li>Foco total na confiança entre utilizadores</li>
+
+            </ul>
+
+        </div>
+
+        <!-- RESUMO -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-3xl p-6 shadow-2xl flex flex-col gap-3">
+
+            <h2 class="text-xl font-bold">
+                Em resumo
+            </h2>
+
+            <p class="text-white/90 leading-relaxed">
+                O moBay não é apenas um lugar para comprar e vender.
+                É um sistema criado para que qualquer pessoa possa fazer negócios com mais confiança, sabendo que o dinheiro só é liberado quando tudo estiver certo.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}
