@@ -7,6 +7,14 @@ from urllib.parse import quote
 
 transaction_bp = Blueprint("transaction", __name__)
 
+from zoneinfo import ZoneInfo
+
+def to_local(dt):
+    if dt.tzinfo is None:
+        # se vier sem timezone, assume UTC (recomendado)
+        dt = dt.replace(tzinfo=ZoneInfo("UTC"))
+    return dt.astimezone(ZoneInfo(app.config["Africa/Maputo"]))
+    
 @transaction_bp.route("/transactions")
 def transactions():
     session["current"] = "/transactions"
