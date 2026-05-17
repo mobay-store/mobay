@@ -10,6 +10,8 @@ def get_product(slug):
         joinedload(Product.images)
     ).filter_by(id=int(slug)).first()
     print(product.owner.nome)
+    if product.status == "inactivo":
+        return False
     return product
 
 
