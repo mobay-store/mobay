@@ -31,7 +31,8 @@ def login_name():
             )
 
             session["user_id"] = user.id
-            session["logged"] = telefone
+            session["logged"] = session.get("temp")
+            session["temp"] = ""
         except Exception as e:
             flash(e)
             return redirect("/login/name")
