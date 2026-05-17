@@ -38,8 +38,20 @@ def login_number():
 def login_name():
     if request.method == "POST":
         try:
+            nome = request.form["nome"].strip()
+        
+            # Mínimo 5 caracteres
+            if len(nome) < 5:
+                flash("Nome muito curto.")
+                return redirect("/login/name")
+        
+            # Apenas letras e espaços
+            if not re.fullmatch(r"[A-Za-zÀ-ÿ\s]+", nome):
+                flash("O nome deve conter apenas letras.")
+                return redirect("/login/name")
+            
             user = register_user(
-                nome=request.form["nome"],
+                nome=nome,
                 telefone=session.get("temp"),
                 pin=request.form["pin"]
             )
