@@ -16,7 +16,9 @@ def homepage():
         products=products
     )
 
-
+@main_bp.route("/sobre")
+def sobre():
+    return render_template("sobre.html")
 
 
 
