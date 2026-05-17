@@ -9,10 +9,24 @@ def login_number():
 
         if session.get("logged"):
             return redirect("/")
+            
         telefone = request.form["telefone"]
-        session["temp"] = telefone
+        
 
+        telefone = telefone.strip()
+
+        # Apenas números e entre 9 e 12 dígitos
+        if not telefone.isdigit():
+            flash("O telefone deve conter apenas números.")
+            return redirect("/login")
+    
+        if len(telefone) < 9 or len(telefone) > 12:
+            flash("O telefone deve ter entre 9 e 12 dígitos.")
+            return redirect("/login")
+
+        session["temp"] = telefone
         if check_user(telefone):
+            
             return render_template("pass_form.html", hello="Já tens conta 🥹", telefone=telefone)
 
         return render_template("name_form.html", telefone=telefone)
@@ -33,6 +47,8 @@ def login_name():
             session["user_id"] = user.id
             session["logged"] = session.get("temp")
             session["temp"] = ""
+
+        
         except Exception as e:
             flash(e)
             return redirect("/login/name")
