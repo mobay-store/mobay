@@ -2,6 +2,8 @@ from models import Product, db, Transaction, User
 
 from flask import Blueprint, render_template, session, redirect, request, flash
 from services.notify import notify
+import requests
+from urllib.parse import quote
 
 confirm_bp = Blueprint("confirm", __name__)
 
@@ -68,7 +70,9 @@ def confirm_submit():
 
         db.session.add(transaction)
         db.session.commit()
-        notify(f"Acao: Confirmacao de compra\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.titulo}\nPreco: {product.preco}")
+        message = quote(f"Acao: Confirmacao de compra\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.titulo}\nPreco: {product.preco}")
+        
+        requests.get(f"https://api.callmebot.com/facebook/send.php?apikey=vKkkSqQtWSvxeMPv&text={message}")
     return redirect("/transactions")
 
 
