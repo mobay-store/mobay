@@ -5,7 +5,7 @@ import os, uuid
 from werkzeug.utils import secure_filename
 import cloudinary
 import cloudinary.uploader
-
+import re
 
 
 from PIL import Image
@@ -81,13 +81,26 @@ def add_product():
         try:
             preco = float(request.form["preco"])
         except:
-            return "Preço inválido"
-
+            flash("Preço inválido")
+            return redirect("/vender")
+    
+        descricao = request.form.get("descricao").strip()
+    
+        # Mínimo 20 caracteres
+        if len(descricao) < 20:
+            flash("A descrição deve ter no mínimo 20 caracteres.")
+            return redirect("/vender")
+    
+        # Apenas letras, números, espaços e pontuação básica
+        if not re.fullmatch(r"[A-Za-zÀ-ÿ0-9\s.,!?()-]+", descricao):
+            flash("A descrição deve ser alfanumérica.")
+            return redirect("/vender")
+        
         product = Product(
             user_id=user.id,
             titulo=request.form["titulo"],
             preco=preco,
-            descricao=request.form.get("descricao"),
+            descricao=descricao,
             categoria=request.form.get("categoria"),
             provincia = request.form.get("provincia"),
         )
