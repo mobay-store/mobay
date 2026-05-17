@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 import cloudinary
 import cloudinary.uploader
 import re
-
+from zoneinfo import ZoneInfo
 
 from PIL import Image
 import io
@@ -17,7 +17,11 @@ cloudinary.config(
     api_secret="zdabFGmgS3xQ7GQK055XDs2-vXg"
 )
 
-
+#HELPERS
+def to_local(dt):
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=ZoneInfo("UTC"))
+    return dt.astimezone(ZoneInfo("Africa/Maputo"))
 
 def upload_image(file):
 
