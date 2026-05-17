@@ -5,6 +5,7 @@ import os
 import csv
 from datetime import datetime
 from collections import Counter
+from zoneinfo import ZoneInfo
 
 def create_app():
     app = Flask(__name__)
@@ -13,10 +14,21 @@ def create_app():
     app.config['SECRET_KEY'] = 'dev-key'
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+    app.config["TIMEZONE"] = "Africa/Maputo"
+    
+    
+    def to_local(dt):
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=ZoneInfo("UTC"))
+        return dt.astimezone(ZoneInfo(app.config["TIMEZONE"]))
+        
+    
     db.init_app(app)
     register_blueprints(app)
 
+    @app.context_processor
+    def inject_utils():
+        return dict(to_local=to_local)    
     # --- INÍCIO DO MONITORAMENTO ---
     
     LOG_FILE = 'access_logs.csv'
