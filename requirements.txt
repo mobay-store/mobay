@@ -6,3 +6,4 @@ pillow
 cloudinary
 requests
 gunicorn
+zoneinfo
