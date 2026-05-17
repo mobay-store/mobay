@@ -31,7 +31,11 @@
                     </svg>
 
                 </div>
-
+                {% with error = get_flashed_messages() %}
+                {% if error %}
+                    <p class="text-red-400 flex justify-center">{{error[0]}}</p>
+                {%endif%}
+                {%endwith%}
                 <h1 class="text-3xl font-bold text-slate-900">
                     Entrar
                 </h1>
