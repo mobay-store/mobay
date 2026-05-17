@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, session, redirect, flash, request
 from models import Transaction, Product, db, User
 from sqlalchemy import or_
 from services.notify import notify
+import requests
+from urllib.parse import quote
 
 transaction_bp = Blueprint("transaction", __name__)
 
@@ -40,6 +42,7 @@ def confirm_receipt():
     product.status = "inactivo"
     
     db.session.commit()
-    notify(f"Acao: Confirmacao de recebimento\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.titulo}\nPreco: {product.preco}")
+    message = quote(f"Acao: Confirmacao de recebimento\n\nUsuario: {user.nome}\nTelefone: {user.telefone}\nProduto: {product.titulo}\nPreco: {product.preco}")
+    requests.get(f"https://api.callmebot.com/facebook/send.php?apikey=vKkkSqQtWSvxeMPv&text={message}")
 
     return redirect("/transactions")
