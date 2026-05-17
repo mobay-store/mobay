@@ -26,7 +26,7 @@ def login_name():
         try:
             user = register_user(
                 nome=request.form["nome"],
-                telefone=session.get("logged"),
+                telefone=session.get("temp"),
                 pin=request.form["pin"]
             )
 
