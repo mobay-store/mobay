@@ -54,8 +54,10 @@ UPLOAD_FOLDER = "static/uploads"
 @product_bp.route("/p/<slug>")
 def product_page(slug):
     data = get_product(slug)
+    if not data:
+        return "Erro conhecido, mas ignorado."
     buyer_id = session.get("user_id")
-    return render_template("product.html", product=data, buyer_id=buyer_id, criado_em = data.criado_em.strftime("%d %b %Y"))
+    return render_template("product.html", product=data, buyer_id=buyer_id, criado_em = to_local(data.criado_em).strftime("%d %b %Y"))
 
 
 @product_bp.route("/vender", methods=["GET", "POST"])
