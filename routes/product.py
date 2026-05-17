@@ -7,7 +7,7 @@ import cloudinary
 import cloudinary.uploader
 import re
 from zoneinfo import ZoneInfo
-
+import requests
 from PIL import Image
 import io
 
@@ -125,7 +125,7 @@ def add_product():
             except Exception as e:
                 return f"Erro na imagem:, {e}"
                 
-
+        requests.get(f"https://api.callmebot.com/facebook/send.php?apikey=vKkkSqQtWSvxeMPv&text=Novo+produto")
         db.session.commit()
 
         return redirect(f"/p/{product.id}")
